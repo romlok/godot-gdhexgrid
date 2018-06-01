@@ -15,34 +15,46 @@ extends Node
 const size = Vector2(1, sqrt(3)/2)
 
 # Cube coords are definitive
-var cube_coords = Vector3() setget set_coords
-# but other coord systems can be used
-var axial_coords setget set_coords, get_axial_coords
+# We use an array of ints because vectors are all floats,
+# which can result in precision errors over time.
+var cube_coords = [0, 0, 0] setget set_cube_coords, get_cube_coords
+# other coord systems can be used
+var axial_coords setget set_axial_coords, get_axial_coords
 var offset_coords setget set_offset_coords, get_offset_coords
 
-func set_coords(val):
-	if typeof(val) == TYPE_VECTOR3:
-		# Good ol' cube coords
-		assert(val.x + val.y + val.z == 0)
-		cube_coords = val
-	elif typeof(val) == TYPE_VECTOR2:
-		# Convert from axial coords
-		cube_coords = Vector3(val.x, val.y, -val.x - val.y)
-	else:
-		# Do nothing if we get some unhandled value
-		printerr("Invalid HexCell coordinates: ", val)
+
+func get_cube_coords():
+	# Returns a Vector3 of the cube coordinates
+	return Vector3(cube_coords[0], cube_coords[1], cube_coords[2])
 	
-func get_axis_coords():
-	# Just convert the cube coords
-	return Vector2(cube_coords.x, cube_coords.y)
+func set_cube_coords(val):
+	# Sets the position from a Vector3 or a 3-array of cube coordinates
+	if typeof(val) == TYPE_VECTOR3:
+		val = [int(val.x), int(val.y), int(val.z)]
+	assert(val[0] + val[1] + val[2] == 0)
+	cube_coords = val
+	
+func get_axial_coords():
+	# Returns a Vector2 of the axial coordinates
+	return Vector2(cube_coords[0], cube_coords[1])
+	
+func set_axial_coords(val):
+	# Sets position from a Vector2 of axial coordinates
+	var x = int(val.x)
+	var y = int(val.y)
+	cube_coords = [x, y, -x - y]
 	
 func get_offset_coords():
-	# Convert from cube to offset
-	var off_y = cube_coords.y + (cube_coords.x - (cube_coords.x % 2)) /2
-	return Vector2(cube_coords.x, off_y)
+	# Returns a Vector2 of the offset coordinates
+	var x = cube_coords[0]
+	var y = cube_coords[1]
+	var off_y = y + (x - (x % 2)) / 2
+	return Vector2(x, off_y)
 	
 func set_offset_coords(val):
-	# Convert from offset to cube
-	var cube_y = val.y - (val.x - (val.x % 2)) / 2
-	self.set_coords(Vector2(val.x, cube_y))
+	# Sets position from a Vector2 of offset coordinates
+	var x = int(val.x)
+	var y = int(val.y)
+	var cube_y = y - (x - (x % 2)) / 2
+	self.set_coords(Vector2(x, cube_y))
 	
