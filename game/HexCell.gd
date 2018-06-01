@@ -3,7 +3,7 @@
 # Ref: https://www.redblobgames.com/grids/hexagons/
 #
 # The hexes use a flat-topped orientation,
-# the axial coordinates use +y => N, +x => SE,
+# the axial coordinates use +y => N, +x => NE,
 # and offset coords have odd rows shifted up half a step.
 #
 # Using y instead of z makes following the reference more tricky,
@@ -48,13 +48,13 @@ func get_offset_coords():
 	# Returns a Vector2 of the offset coordinates
 	var x = cube_coords[0]
 	var y = cube_coords[1]
-	var off_y = y + (x - (x % 2)) / 2
+	var off_y = y + (x - (x & 1)) / 2
 	return Vector2(x, off_y)
 	
 func set_offset_coords(val):
 	# Sets position from a Vector2 of offset coordinates
 	var x = int(val.x)
 	var y = int(val.y)
-	var cube_y = y - (x - (x % 2)) / 2
-	self.set_coords(Vector2(x, cube_y))
+	var cube_y = y - (x - (x & 1)) / 2
+	self.set_axial_coords(Vector2(x, cube_y))
 	
