@@ -76,7 +76,7 @@ func set_offset_coords(val):
 	
 
 """
-	Utility functions
+	Finding our neighbours
 """
 func get_adjacent(dir):
 	# Returns a HexCell instance for the given direction from this.
@@ -95,4 +95,14 @@ func get_all_adjacent():
 		cell.cube_coords = self.cube_coords + coord
 		cells.append(cell)
 	return cells
+	
+func distance_to(target):
+	# Returns the number of hops from this hex to another
+	if typeof(target) == TYPE_VECTOR2:
+		target = axial_to_cube(target)
+	return (
+			abs(cube_coords[0] - target.x)
+			+ abs(cube_coords[1] - target.y)
+			+ abs(cube_coords[2] - target.z)
+			) / 2
 	

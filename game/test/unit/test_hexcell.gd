@@ -89,3 +89,18 @@ class TestAdjacent:
 		assert_has(coords, Vector2(0, 3))
 		
 	
+class TestBetweenTwo:
+	extends "res://addons/gut/test.gd"
+	
+	var HexCell = load("res://HexCell.gd")
+	var cell
+	
+	func setup():
+		cell = HexCell.new()
+		cell.axial_coords = Vector2(1, 2)
+	
+	func test_distance():
+		assert_eq(cell.distance_to(Vector2(0, 0)), 3)
+		assert_eq(cell.distance_to(Vector2(3, 4)), 4)
+		assert_eq(cell.distance_to(Vector2(-1, -1)), 5)
+	
