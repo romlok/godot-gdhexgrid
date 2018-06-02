@@ -31,7 +31,9 @@ func set_cube_coords(val):
 	# Sets the position from a Vector3 or a 3-array of cube coordinates
 	if typeof(val) == TYPE_VECTOR3:
 		val = [int(val.x), int(val.y), int(val.z)]
-	assert(val[0] + val[1] + val[2] == 0)
+	if val[0] + val[1] + val[2] != 0:
+		print("WARNING: Invalid cube coordinates for hex (x+y+z!=0): ", val)
+		return
 	cube_coords = val
 	
 func get_axial_coords():

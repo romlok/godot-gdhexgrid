@@ -30,7 +30,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
-_run_on_load = false
+_run_on_load = true
 _select_script = null
 _tests_like = null
 _should_print_to_console = true
