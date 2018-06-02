@@ -33,6 +33,12 @@ var offset_coords setget set_offset_coords, get_offset_coords
 """
 	Handle coordinate access and conversion
 """
+func axial_to_cube(val):
+	# Returns the Vector3 cube coordinates for an axial Vector2
+	var x = int(val.x)
+	var y = int(val.y)
+	return Vector3(x, y, -x - y)
+	
 func get_cube_coords():
 	# Returns a Vector3 of the cube coordinates
 	return Vector3(cube_coords[0], cube_coords[1], cube_coords[2])
@@ -52,9 +58,7 @@ func get_axial_coords():
 	
 func set_axial_coords(val):
 	# Sets position from a Vector2 of axial coordinates
-	var x = int(val.x)
-	var y = int(val.y)
-	cube_coords = [x, y, -x - y]
+	set_cube_coords(axial_to_cube(val))
 	
 func get_offset_coords():
 	# Returns a Vector2 of the offset coordinates
@@ -74,11 +78,13 @@ func set_offset_coords(val):
 """
 	Utility functions
 """
-func get_adjacent(direction):
-	# Returns a HexCell instance at the given offset from this
-	# Intended for one of the DIR_* consts, but really any x+y+z==0 Vector3 will do.
+func get_adjacent(dir):
+	# Returns a HexCell instance for the given direction from this.
+	# Intended for one of the DIR_* consts, but really any Vector2 or x+y+z==0 Vector3 will do.
+	if typeof(dir) == TYPE_VECTOR2:
+		dir = axial_to_cube(dir)
 	var cell = get_script().new()
-	cell.cube_coords = self.cube_coords + direction
+	cell.cube_coords = self.cube_coords + dir
 	return cell
 	
 func get_all_adjacent():

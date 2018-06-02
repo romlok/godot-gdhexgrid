@@ -73,6 +73,9 @@ class TestAdjacent:
 	func test_not_really_adjacent():
 		var foo = cell.get_adjacent(Vector3(-3, -3, 6))
 		assert_eq(foo.axial_coords, Vector2(-2, -1))
+	func test_adjacent_axial():
+		var foo = cell.get_adjacent(Vector2(1, 1))
+		assert_eq(foo.axial_coords, Vector2(2, 3))
 		
 	func test_all_adjacent():
 		var coords = []
