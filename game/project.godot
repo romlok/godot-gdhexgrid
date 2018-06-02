@@ -11,8 +11,12 @@ config_version=3
 [application]
 
 config/name="HexGrid"
-run/main_scene="res://test.tscn"
+run/main_scene="res://test/test.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "gut" )
 
 [rendering]
 

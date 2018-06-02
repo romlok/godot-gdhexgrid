@@ -1,4 +1,4 @@
-extends Spatial
+extends Node
 
 var HexCell = preload("res://HexCell.gd")
 

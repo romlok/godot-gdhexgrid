@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test/test.gd" type="Script" id=1]
+[ext_resource path="res://addons/gut/gut.gd" type="Script" id=2]
+[ext_resource path="res://addons/gut/icon.png" type="Texture" id=3]
+
+[node name="Node" type="Node" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="Gut" type="WindowDialog" parent="." index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 48.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+window_title = ""
+resizable = false
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+_run_on_load = false
+_select_script = null
+_tests_like = null
+_should_print_to_console = true
+_log_level = 1
+_yield_between_tests = true
+_disable_strict_datatype_checks = false
+_test_prefix = "test_"
+_file_prefix = "test_"
+_file_extension = ".gd"
+_inner_class_prefix = "Test"
+_temp_directory = "user://gut_temp_directory"
+_directory1 = "res://test/unit"
+_directory2 = "res://test/integration"
+_directory3 = ""
+_directory4 = ""
+_directory5 = ""
+_directory6 = ""
+
+
