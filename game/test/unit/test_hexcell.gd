@@ -47,3 +47,42 @@ class TestCoords:
 		assert_eq(cell.offset_coords, Vector2(-1, -2))
 		
 	
+class TestAdjacent:
+	extends "res://addons/gut/test.gd"
+	
+	var HexCell = load("res://HexCell.gd")
+	var cell
+	
+	func setup():
+		cell = HexCell.new()
+		cell.axial_coords = Vector2(1, 2)
+	
+	func test_adjacent():
+		var foo = cell.get_adjacent(HexCell.DIR_N)
+		assert_eq(foo.axial_coords, Vector2(1, 3))
+		foo = cell.get_adjacent(HexCell.DIR_NE)
+		assert_eq(foo.axial_coords, Vector2(2, 2))
+		foo = cell.get_adjacent(HexCell.DIR_SE)
+		assert_eq(foo.axial_coords, Vector2(2, 1))
+		foo = cell.get_adjacent(HexCell.DIR_S)
+		assert_eq(foo.axial_coords, Vector2(1, 1))
+		foo = cell.get_adjacent(HexCell.DIR_SW)
+		assert_eq(foo.axial_coords, Vector2(0, 2))
+		foo = cell.get_adjacent(HexCell.DIR_NW)
+		assert_eq(foo.axial_coords, Vector2(0, 3))
+	func test_not_really_adjacent():
+		var foo = cell.get_adjacent(Vector3(-3, -3, 6))
+		assert_eq(foo.axial_coords, Vector2(-2, -1))
+		
+	func test_all_adjacent():
+		var coords = []
+		for foo in cell.get_all_adjacent():
+			coords.append(foo.axial_coords)
+		assert_has(coords, Vector2(1, 3))
+		assert_has(coords, Vector2(2, 2))
+		assert_has(coords, Vector2(2, 1))
+		assert_has(coords, Vector2(1, 1))
+		assert_has(coords, Vector2(0, 2))
+		assert_has(coords, Vector2(0, 3))
+		
+	

@@ -13,6 +13,13 @@ extends Node
 
 # We use unit-size flat-topped hexes
 const size = Vector2(1, sqrt(3)/2)
+const DIR_N = Vector3(0, 1, -1)
+const DIR_NE = Vector3(1, 0, -1)
+const DIR_SE = Vector3(1, -1, 0)
+const DIR_S = Vector3(0, -1, 1)
+const DIR_SW = Vector3(-1, 0, 1)
+const DIR_NW = Vector3(-1, 1, 0)
+
 
 # Cube coords are definitive
 # We use an array of ints because vectors are all floats,
@@ -23,6 +30,9 @@ var axial_coords setget set_axial_coords, get_axial_coords
 var offset_coords setget set_offset_coords, get_offset_coords
 
 
+"""
+	Handle coordinate access and conversion
+"""
 func get_cube_coords():
 	# Returns a Vector3 of the cube coordinates
 	return Vector3(cube_coords[0], cube_coords[1], cube_coords[2])
@@ -59,4 +69,24 @@ func set_offset_coords(val):
 	var y = int(val.y)
 	var cube_y = y - (x - (x & 1)) / 2
 	self.set_axial_coords(Vector2(x, cube_y))
+	
+
+"""
+	Utility functions
+"""
+func get_adjacent(direction):
+	# Returns a HexCell instance at the given offset from this
+	# Intended for one of the DIR_* consts, but really any x+y+z==0 Vector3 will do.
+	var cell = get_script().new()
+	cell.cube_coords = self.cube_coords + direction
+	return cell
+	
+func get_all_adjacent():
+	# Returns an array of HexCell instances representing adjacent locations
+	var cells = Array()
+	for coord in [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]:
+		var cell = get_script().new()
+		cell.cube_coords = self.cube_coords + coord
+		cells.append(cell)
+	return cells
 	
