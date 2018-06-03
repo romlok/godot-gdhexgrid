@@ -28,6 +28,12 @@ var axial_coords setget set_axial_coords, get_axial_coords
 var offset_coords setget set_offset_coords, get_offset_coords
 
 
+func _init(coords=null):
+	# HexCells can be created with coordinates
+	if coords:
+		self.cube_coords = obj_to_coords(coords)
+
+
 """
 	Handle coordinate access and conversion
 """
@@ -119,17 +125,13 @@ func get_adjacent(dir):
 	# Intended for one of the DIR_* consts, but really any Vector2 or x+y+z==0 Vector3 will do.
 	if typeof(dir) == TYPE_VECTOR2:
 		dir = axial_to_cube_coords(dir)
-	var cell = get_script().new()
-	cell.cube_coords = self.cube_coords + dir
-	return cell
+	return get_script().new(self.cube_coords + dir)
 	
 func get_all_adjacent():
 	# Returns an array of HexCell instances representing adjacent locations
 	var cells = Array()
 	for coord in [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]:
-		var cell = get_script().new()
-		cell.cube_coords = self.cube_coords + coord
-		cells.append(cell)
+		cells.append(get_script().new(self.cube_coords + coord))
 	return cells
 	
 func distance_to(target):

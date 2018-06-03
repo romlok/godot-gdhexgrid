@@ -76,8 +76,7 @@ class TestAdjacent:
 	var cell
 	
 	func setup():
-		cell = HexCell.new()
-		cell.axial_coords = Vector2(1, 2)
+		cell = HexCell.new(Vector2(1, 2))
 	
 	func test_adjacent():
 		var foo = cell.get_adjacent(HexCell.DIR_N)
@@ -118,8 +117,7 @@ class TestBetweenTwo:
 	var cell
 	
 	func setup():
-		cell = HexCell.new()
-		cell.axial_coords = Vector2(1, 2)
+		cell = HexCell.new(Vector2(1, 2))
 	
 	func test_distance():
 		assert_eq(cell.distance_to(Vector2(0, 0)), 3)
