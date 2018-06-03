@@ -144,3 +144,17 @@ func distance_to(target):
 			+ abs(cube_coords.z - target.z)
 			) / 2
 	
+func line_to(target):
+	# Returns an array of HexCell instances representing
+	# a straight path from here to the target, including both ends
+	target = obj_to_coords(target)
+	# End of our lerp is nudged so it never lands exactly on an edge
+	var nudged_target = target + Vector3(1e-6, 2e-6, -3e-6)
+	var steps = distance_to(target)
+	var path = []
+	for dist in range(steps):
+		var lerped = cube_coords.linear_interpolate(nudged_target, dist / steps)
+		path.append(get_script().new(round_coords(lerped)))
+	path.append(get_script().new(target))
+	return path
+	

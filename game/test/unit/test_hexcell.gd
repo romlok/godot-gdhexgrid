@@ -123,4 +123,48 @@ class TestBetweenTwo:
 		assert_eq(cell.distance_to(Vector2(0, 0)), 3)
 		assert_eq(cell.distance_to(Vector2(3, 4)), 4)
 		assert_eq(cell.distance_to(Vector2(-1, -1)), 5)
+		
+	func test_line_straight():
+		# Straight line, nice and simple
+		var expected = [
+			Vector2(1, 2),
+			Vector2(2, 2),
+			Vector2(3, 2),
+			Vector2(4, 2),
+			Vector2(5, 2),
+		]
+		var path = cell.line_to(Vector2(5, 2))
+		assert_eq(path.size(), expected.size())
+		for idx in range(expected.size()):
+			assert_eq(path[idx].axial_coords, expected[idx])
+		
+	func test_line_angled():
+		# It's gone all wibbly-wobbly
+		var expected = [
+			Vector2(1, 2),
+			Vector2(2, 2),
+			Vector2(2, 3),
+			Vector2(3, 3),
+			Vector2(4, 3),
+			Vector2(4, 4),
+			Vector2(5, 4),
+		]
+		var path = cell.line_to(Vector2(5, 4))
+		assert_eq(path.size(), expected.size())
+		for idx in range(expected.size()):
+			assert_eq(path[idx].axial_coords, expected[idx])
+		
+	func test_line_edge():
+		# Living on the edge between two hexes
+		var expected = [
+			Vector2(1, 2),
+			Vector2(1, 3),
+			Vector2(2, 3),
+			Vector2(2, 4),
+			Vector2(3, 4),
+		]
+		var path = cell.line_to(Vector2(3, 4))
+		assert_eq(path.size(), expected.size())
+		for idx in range(expected.size()):
+			assert_eq(path[idx].axial_coords, expected[idx])
 	
