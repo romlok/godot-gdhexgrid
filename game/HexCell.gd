@@ -33,6 +33,9 @@ func _init(coords=null):
 	if coords:
 		self.cube_coords = obj_to_coords(coords)
 
+func create_hex(coords):
+	# Returns a new HexCell instance
+	return get_script().new(coords)
 
 """
 	Handle coordinate access and conversion
@@ -125,13 +128,13 @@ func get_adjacent(dir):
 	# Intended for one of the DIR_* consts, but really any Vector2 or x+y+z==0 Vector3 will do.
 	if typeof(dir) == TYPE_VECTOR2:
 		dir = axial_to_cube_coords(dir)
-	return get_script().new(self.cube_coords + dir)
+	return create_hex(self.cube_coords + dir)
 	
 func get_all_adjacent():
 	# Returns an array of HexCell instances representing adjacent locations
 	var cells = Array()
 	for coord in [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]:
-		cells.append(get_script().new(self.cube_coords + coord))
+		cells.append(create_hex(self.cube_coords + coord))
 	return cells
 	
 func distance_to(target):
@@ -154,7 +157,7 @@ func line_to(target):
 	var path = []
 	for dist in range(steps):
 		var lerped = cube_coords.linear_interpolate(nudged_target, dist / steps)
-		path.append(get_script().new(round_coords(lerped)))
-	path.append(get_script().new(target))
+		path.append(create_hex(round_coords(lerped)))
+	path.append(create_hex(target))
 	return path
 	
