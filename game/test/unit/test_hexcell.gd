@@ -1,5 +1,27 @@
 extends "res://addons/gut/test.gd"
 
+class TestConversions:
+	extends "res://addons/gut/test.gd"
+	
+	var HexCell = load("res://HexCell.gd")
+	var cell
+	
+	func setup():
+		cell = HexCell.new()
+		
+	
+	func test_axial_to_cube():
+		assert_eq(cell.axial_to_cube_coords(Vector2(2, 1)), Vector3(2, 1, -3))
+		assert_eq(cell.axial_to_cube_coords(Vector2(-1, -1)), Vector3(-1, -1, 2))
+		
+	func test_rounding():
+		assert_eq(cell.round_coords(Vector3(0.1, 0.5, -0.6)), Vector3(0, 1, -1))
+		assert_eq(cell.round_coords(Vector3(-0.4, -1.3, 1.7)), Vector3(-1, -1, 2))
+		
+		assert_eq(cell.round_coords(Vector2(-0.1, 0.6)), Vector3(0, 1, -1))
+		assert_eq(cell.round_coords(Vector2(4.2, -5.5)), Vector3(4, -5, 1))
+		
+	
 class TestCoords:
 	extends "res://addons/gut/test.gd"
 	
