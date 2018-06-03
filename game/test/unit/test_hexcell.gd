@@ -69,7 +69,7 @@ class TestCoords:
 		assert_eq(cell.offset_coords, Vector2(-1, -2))
 		
 	
-class TestAdjacent:
+class TestNearby:
 	extends "res://addons/gut/test.gd"
 	
 	var HexCell = load("res://HexCell.gd")
@@ -77,6 +77,13 @@ class TestAdjacent:
 	
 	func setup():
 		cell = HexCell.new(Vector2(1, 2))
+	
+	func check_expected(cells, expected):
+		# Check that a bunch of cells are what were expected
+		assert_eq(cells.size(), expected.size())
+		for hex in cells:
+			assert_has(expected, hex.axial_coords)
+		
 	
 	func test_adjacent():
 		var foo = cell.get_adjacent(HexCell.DIR_N)
@@ -108,6 +115,67 @@ class TestAdjacent:
 		assert_has(coords, Vector2(1, 1))
 		assert_has(coords, Vector2(0, 2))
 		assert_has(coords, Vector2(0, 3))
+		
+	func test_all_within_0():
+		var expected = [
+			Vector2(1, 2),
+		]
+		var cells = cell.get_all_within(0)
+		check_expected(cells, expected)
+	func test_all_within_1():
+		var expected = [
+			Vector2(1, 2),
+			Vector2(1, 3),
+			Vector2(2, 2),
+			Vector2(2, 1),
+			Vector2(1, 1),
+			Vector2(0, 2),
+			Vector2(0, 3),
+		]
+		var cells = cell.get_all_within(1)
+		check_expected(cells, expected)
+	func test_all_within_2():
+		var expected = [
+			Vector2(-1, 4), Vector2(0, 4), Vector2(1, 4),
+			Vector2(-1, 3), Vector2(0, 3), Vector2(1, 3), Vector2(2, 3),
+			Vector2(-1, 2), Vector2(0, 2),
+			Vector2(1, 2),
+			Vector2(2, 2), Vector2(3, 2),
+			Vector2(0, 1), Vector2(1, 1), Vector2(2, 1), Vector2(3, 1),
+			Vector2(1, 0), Vector2(2, 0), Vector2(3, 0),
+		]
+		var cells = cell.get_all_within(2)
+		check_expected(cells, expected)
+		
+	func test_ring_0():
+		var expected = [
+			Vector2(1, 2),
+		]
+		var cells = cell.get_ring(0)
+		check_expected(cells, expected)
+	func test_ring_1():
+		var expected = [
+			Vector2(1, 3),
+			Vector2(2, 2),
+			Vector2(2, 1),
+			Vector2(1, 1),
+			Vector2(0, 2),
+			Vector2(0, 3),
+		]
+		var cells = cell.get_ring(1)
+		check_expected(cells, expected)
+	func test_ring_2():
+		var expected = [
+			Vector2(1, 4), # Start at +2y
+			Vector2(2, 3), Vector2(3, 2), # SE
+			Vector2(3, 1), Vector2(3, 0), # S
+			Vector2(2, 0), Vector2(1, 0), # SW
+			Vector2(0, 1), Vector2(-1, 2), # NW
+			Vector2(-1, 3), Vector2(-1, 4), # N
+			Vector2(0, 4), # NE
+		]
+		var cells = cell.get_ring(2)
+		check_expected(cells, expected)
 		
 	
 class TestBetweenTwo:

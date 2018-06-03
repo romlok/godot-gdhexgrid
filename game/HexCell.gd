@@ -137,6 +137,27 @@ func get_all_adjacent():
 		cells.append(create_hex(self.cube_coords + coord))
 	return cells
 	
+func get_all_within(distance):
+	# Returns an array of all HexCell instances within the given distance
+	var cells = Array()
+	for dx in range(-distance, distance+1):
+		for dy in range(max(-distance, -distance - dx), min(distance, distance - dx) + 1):
+			cells.append(create_hex(self.axial_coords + Vector2(dx, dy)))
+	return cells
+	
+func get_ring(distance):
+	# Returns an array of all HexCell instances at the given distance
+	if distance < 1:
+		return [create_hex(self.cube_coords)]
+	# Start at the top (+y) and walk in a clockwise circle
+	var cells = Array()
+	var current = create_hex(self.cube_coords + (DIR_N * distance))
+	for dir in [DIR_SE, DIR_S, DIR_SW, DIR_NW, DIR_N, DIR_NE]:
+		for step in range(distance):
+			cells.append(current)
+			current = current.get_adjacent(dir)
+	return cells
+	
 func distance_to(target):
 	# Returns the number of hops from this hex to another
 	# Can be passed cube or axial coords, or another HexCell instance
