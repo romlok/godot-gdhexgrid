@@ -21,11 +21,9 @@ const DIR_SW = Vector3(-1, 0, 1)
 const DIR_NW = Vector3(-1, 1, 0)
 
 
-# Cube coords are definitive
-# We use an array of ints because vectors are all floats,
-# which can result in precision errors over time.
-var cube_coords = [0, 0, 0] setget set_cube_coords, get_cube_coords
-# other coord systems can be used
+# Cube coords are canonical
+var cube_coords = Vector3(0, 0, 0) setget set_cube_coords, get_cube_coords
+# but other coord systems can be used
 var axial_coords setget set_axial_coords, get_axial_coords
 var offset_coords setget set_offset_coords, get_offset_coords
 
@@ -61,20 +59,18 @@ func round_coords(val):
 
 func get_cube_coords():
 	# Returns a Vector3 of the cube coordinates
-	return Vector3(cube_coords[0], cube_coords[1], cube_coords[2])
+	return cube_coords
 	
 func set_cube_coords(val):
-	# Sets the position from a Vector3 or a 3-array of cube coordinates
-	if typeof(val) == TYPE_VECTOR3:
-		val = [int(val.x), int(val.y), int(val.z)]
-	if val[0] + val[1] + val[2] != 0:
+	# Sets the position from a Vector3 of cube coordinates
+	if val.x + val.y + val.z != 0:
 		print("WARNING: Invalid cube coordinates for hex (x+y+z!=0): ", val)
 		return
-	cube_coords = val
+	cube_coords = round_coords(val)
 	
 func get_axial_coords():
 	# Returns a Vector2 of the axial coordinates
-	return Vector2(cube_coords[0], cube_coords[1])
+	return Vector2(cube_coords.x, cube_coords.y)
 	
 func set_axial_coords(val):
 	# Sets position from a Vector2 of axial coordinates
@@ -82,8 +78,8 @@ func set_axial_coords(val):
 	
 func get_offset_coords():
 	# Returns a Vector2 of the offset coordinates
-	var x = cube_coords[0]
-	var y = cube_coords[1]
+	var x = int(cube_coords.x)
+	var y = int(cube_coords.y)
 	var off_y = y + (x - (x & 1)) / 2
 	return Vector2(x, off_y)
 	
@@ -121,8 +117,8 @@ func distance_to(target):
 	if typeof(target) == TYPE_VECTOR2:
 		target = axial_to_cube_coords(target)
 	return (
-			abs(cube_coords[0] - target.x)
-			+ abs(cube_coords[1] - target.y)
-			+ abs(cube_coords[2] - target.z)
+			abs(cube_coords.x - target.x)
+			+ abs(cube_coords.y - target.y)
+			+ abs(cube_coords.z - target.z)
 			) / 2
 	
