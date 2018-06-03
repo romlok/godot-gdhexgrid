@@ -31,6 +31,26 @@ var offset_coords setget set_offset_coords, get_offset_coords
 """
 	Handle coordinate access and conversion
 """
+func obj_to_coords(val):
+	# Returns suitable cube coordinates for the given object
+	# The given object can an be one of:
+	# * Vector3 of standard cube coords;
+	# * Vector2 of axial coords;
+	# * HexCell instance
+	# Any other type of value will return null
+	#
+	# NB that offset coords are NOT supported, as they are
+	# indistinguishable from axial coords.
+	
+	if typeof(val) == TYPE_VECTOR3:
+		return val
+	elif typeof(val) == TYPE_VECTOR2:
+		return axial_to_cube_coords(val)
+	elif typeof(val) == TYPE_OBJECT and val.is_class("HexCell"):
+		return val.cube_coords
+	# Fall through to nothing
+	return
+	
 func axial_to_cube_coords(val):
 	# Returns the Vector3 cube coordinates for an axial Vector2
 	var x = val.x
@@ -114,8 +134,8 @@ func get_all_adjacent():
 	
 func distance_to(target):
 	# Returns the number of hops from this hex to another
-	if typeof(target) == TYPE_VECTOR2:
-		target = axial_to_cube_coords(target)
+	# Can be passed cube or axial coords, or another HexCell instance
+	target = obj_to_coords(target)
 	return (
 			abs(cube_coords.x - target.x)
 			+ abs(cube_coords.y - target.y)
