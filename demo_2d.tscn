@@ -21,9 +21,6 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-area_coords = NodePath("AreaCoords")
-hex_coords = NodePath("HexCoords")
-highlight = NodePath("Highlight")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 

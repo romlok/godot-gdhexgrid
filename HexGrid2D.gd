@@ -3,15 +3,12 @@ extends Node2D
 
 var HexGrid = preload("./HexGrid.gd").new()
 
-export(NodePath) var area_coords = NodePath("AreaCoords")
-export(NodePath) var hex_coords = NodePath("HexCoords")
-export(NodePath) var highlight = NodePath("Highlight")
+onready var area_coords = get_node("AreaCoords")
+onready var hex_coords = get_node("HexCoords")
+onready var highlight = get_node("Highlight")
 
 
 func _ready():
-	area_coords = get_node(area_coords)
-	hex_coords = get_node(hex_coords)
-	highlight = get_node(highlight)
 	if highlight != null:
 		# Work out the scale from the highlight size
 		HexGrid.hex_scale = highlight.scale
