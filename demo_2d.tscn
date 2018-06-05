@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 512, 300 )
 
-[node name="2D Demo" type="Node" index="0"]
+[node name="2D Demo" type="Node"]
 
 [node name="Area2D" type="Area2D" parent="." index="0"]
 
