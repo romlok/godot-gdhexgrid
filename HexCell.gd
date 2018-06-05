@@ -55,8 +55,8 @@ func obj_to_coords(val):
 		return val
 	elif typeof(val) == TYPE_VECTOR2:
 		return axial_to_cube_coords(val)
-	elif typeof(val) == TYPE_OBJECT and val.is_class("HexCell"):
-		return val.cube_coords
+	elif typeof(val) == TYPE_OBJECT and val.has_method("get_cube_coords"):
+		return val.get_cube_coords()
 	# Fall through to nothing
 	return
 	

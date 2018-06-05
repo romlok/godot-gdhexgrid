@@ -1,5 +1,33 @@
 extends "res://addons/gut/test.gd"
 
+class TestNew:
+	extends "res://addons/gut/test.gd"
+	
+	var HexCell = load("res://HexCell.gd")
+	var cell
+	
+	func setup():
+		cell = null
+		
+	
+	func test_null():
+		cell = HexCell.new()
+		assert_eq(cell.axial_coords, Vector2(0, 0))
+		
+	func test_cube():
+		cell = HexCell.new(Vector3(1, 1, -2))
+		assert_eq(cell.axial_coords, Vector2(1, 1))
+		
+	func test_axial():
+		cell = HexCell.new(Vector2(1, -1))
+		assert_eq(cell.axial_coords, Vector2(1, -1))
+		
+	func test_instance():
+		var test_cell = HexCell.new(Vector3(-1, 2, -1))
+		cell = HexCell.new(test_cell)
+		assert_eq(cell.axial_coords, Vector2(-1, 2))
+		
+	
 class TestConversions:
 	extends "res://addons/gut/test.gd"
 	
