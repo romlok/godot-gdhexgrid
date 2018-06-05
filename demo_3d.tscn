@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://HexGrid3D.gd" type="Script" id=1]
+[ext_resource path="res://demo_3d.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -72,17 +72,17 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[sub_resource type="QuadMesh" id=7]
+[sub_resource type="QuadMesh" id=5]
 
 size = Vector2( 2, 1 )
 
-[sub_resource type="ViewportTexture" id=10]
+[sub_resource type="ViewportTexture" id=6]
 
 resource_local_to_scene = true
 flags = 0
 viewport_path = NodePath("HexGrid/Viewport")
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=7]
 
 resource_local_to_scene = true
 render_priority = 0
@@ -107,7 +107,7 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 1, 1, 1, 1 )
-albedo_texture = SubResource( 10 )
+albedo_texture = SubResource( 6 )
 metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
@@ -136,24 +136,24 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo", "Flags", "Resource", "Roughness" ]
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=8]
 
 extents = Vector3( 4, 0.1, 2 )
 
-[sub_resource type="CubeMesh" id=6]
+[sub_resource type="CubeMesh" id=9]
 
 size = Vector3( 8, 0.2, 4 )
 subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[sub_resource type="ViewportTexture" id=8]
+[sub_resource type="ViewportTexture" id=10]
 
 resource_local_to_scene = true
 flags = 0
 viewport_path = NodePath("HexGrid2/Viewport")
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=11]
 
 resource_local_to_scene = true
 render_priority = 0
@@ -178,7 +178,7 @@ params_billboard_mode = 0
 params_grow = false
 params_use_alpha_scissor = false
 albedo_color = Color( 1, 1, 1, 1 )
-albedo_texture = SubResource( 8 )
+albedo_texture = SubResource( 10 )
 metallic = 0.0
 metallic_specular = 0.5
 metallic_texture_channel = 0
@@ -287,9 +287,9 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 skeleton = NodePath("..")
-material/0 = SubResource( 11 )
+material/0 = SubResource( 7 )
 _sections_unfolded = [ "Transform", "material" ]
 
 [node name="Viewport" type="Viewport" parent="HexGrid" index="3"]
@@ -423,7 +423,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape" type="CollisionShape" parent="HexGrid2" index="0"]
 
-shape = SubResource( 5 )
+shape = SubResource( 8 )
 disabled = false
 
 [node name="MeshInstance" type="MeshInstance" parent="HexGrid2" index="1"]
@@ -437,7 +437,7 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 6 )
+mesh = SubResource( 9 )
 skeleton = NodePath("..")
 material/0 = null
 
@@ -470,9 +470,9 @@ lod_min_distance = 0.0
 lod_min_hysteresis = 0.0
 lod_max_distance = 0.0
 lod_max_hysteresis = 0.0
-mesh = SubResource( 7 )
+mesh = SubResource( 5 )
 skeleton = NodePath("..")
-material/0 = SubResource( 9 )
+material/0 = SubResource( 11 )
 _sections_unfolded = [ "material" ]
 
 [node name="Viewport" type="Viewport" parent="HexGrid2" index="3"]
