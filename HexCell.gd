@@ -92,7 +92,7 @@ func get_cube_coords():
 	
 func set_cube_coords(val):
 	# Sets the position from a Vector3 of cube coordinates
-	if val.x + val.y + val.z != 0:
+	if abs(val.x + val.y + val.z) > 0.0001:
 		print("WARNING: Invalid cube coordinates for hex (x+y+z!=0): ", val)
 		return
 	cube_coords = round_coords(val)
