@@ -10,7 +10,7 @@
 """
 extends Node
 
-var HexCell = preload("./HexCell.gd").new()
+var HexCell = preload("./HexCell.gd")
 
 # Allow the user to scale the hex for fake perspective or somesuch
 export(Vector2) var hex_scale = Vector2(1, 1) setget set_hex_scale
@@ -39,10 +39,10 @@ func set_hex_scale(scale):
 
 func get_hex_center(hex):
 	# Returns hex's centre position on the projection plane
-	hex = HexCell.create_hex(hex)
+	hex = HexCell.new(hex)
 	return hex_transform * hex.axial_coords
 	
 func get_hex_at(coords):
 	# Returns a HexCell at the given Vector2 on the projection plane
-	return HexCell.create_hex(hex_transform_inv * coords)
+	return HexCell.new(hex_transform_inv * coords)
 	
