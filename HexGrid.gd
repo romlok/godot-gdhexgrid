@@ -7,6 +7,27 @@
 	We map hex coordinates to Godot-space with +y flipped to be the down vector
 	so that it maps neatly to both Godot's 2D coordinate system, and also to
 	x,z planes in 3D space.
+	
+	
+	## Usage:
+	
+	#### var hex_scale = Vector2(...)
+
+		If you want your hexes to display larger than the default 1 x 0.866 units,
+		then you can customise the scale of the hexes using this property.
+	
+	#### func get_hex_center(hex)
+	
+		Returns the Godot-space coordinate of the center of the given hex coordinates.
+		
+		The coordinates can be given as either a HexCell instance; a Vector3 cube
+		coordinate, or a Vector2 axial coordinate.
+	
+	#### func get_hex_at(coords)
+	
+		Returns HexCell whose grid position contains the given Godot-space coordinates.
+	
+
 """
 extends Node
 

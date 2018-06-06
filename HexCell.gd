@@ -11,6 +11,54 @@
 	Using x,y instead of the reference's preferred x,z for axial coords makes
 	following along with the reference a little more tricky, but is less confusing
 	when using Godot's Vector2(x, y) objects.
+	
+	
+	## Usage:
+	
+	#### var cube_coords; var axial_coords; var offset_coords
+
+		Cube coordinates are used internally as the canonical representation, but
+		both axial and offset coordinates can be read and modified through these
+		properties.
+	
+	#### func get_adjacent(direction)
+	
+		Returns the neighbouring HexCell in the given direction.
+		
+		The direction should be one of the DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, or
+		DIR_NW constants provided by the HexCell class.
+	
+	#### func get_all_adjacent()
+	
+		Returns an array of the six HexCell instances neighbouring this one.
+	
+	#### func get_all_within(distance)
+	
+		Returns an array of all the HexCells within the given number of steps,
+		including the current hex.
+	
+	#### func get_ring(distance)
+	
+		Returns an array of all the HexCells at the given distance from the current.
+	
+	#### func distance_to(target)
+	
+		Returns the number of hops needed to get from this hex to the given target.
+		
+		The target can be supplied as either a HexCell instance, cube or axial
+		coordinates.
+	
+	#### func line_to(target)
+	
+		Returns an array of all the hexes crossed when drawing a straight line
+		between this hex and another.
+		
+		The target can be supplied as either a HexCell instance, cube or axial
+		coordinates.
+		
+		The items in the array will be in the order of traversal, and include both
+		the start (current) hex, as well as the final target.
+
 """
 extends Node
 
