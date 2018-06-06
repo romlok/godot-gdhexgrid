@@ -36,7 +36,7 @@ func _init(coords=null):
 	if coords:
 		self.cube_coords = obj_to_coords(coords)
 
-func create_hex(coords):
+func new_hex(coords):
 	# Returns a new HexCell instance
 	return get_script().new(coords)
 
@@ -131,13 +131,13 @@ func get_adjacent(dir):
 	# Intended for one of the DIR_* consts, but really any Vector2 or x+y+z==0 Vector3 will do.
 	if typeof(dir) == TYPE_VECTOR2:
 		dir = axial_to_cube_coords(dir)
-	return create_hex(self.cube_coords + dir)
+	return new_hex(self.cube_coords + dir)
 	
 func get_all_adjacent():
 	# Returns an array of HexCell instances representing adjacent locations
 	var cells = Array()
 	for coord in [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]:
-		cells.append(create_hex(self.cube_coords + coord))
+		cells.append(new_hex(self.cube_coords + coord))
 	return cells
 	
 func get_all_within(distance):
@@ -145,16 +145,16 @@ func get_all_within(distance):
 	var cells = Array()
 	for dx in range(-distance, distance+1):
 		for dy in range(max(-distance, -distance - dx), min(distance, distance - dx) + 1):
-			cells.append(create_hex(self.axial_coords + Vector2(dx, dy)))
+			cells.append(new_hex(self.axial_coords + Vector2(dx, dy)))
 	return cells
 	
 func get_ring(distance):
 	# Returns an array of all HexCell instances at the given distance
 	if distance < 1:
-		return [create_hex(self.cube_coords)]
+		return [new_hex(self.cube_coords)]
 	# Start at the top (+y) and walk in a clockwise circle
 	var cells = Array()
-	var current = create_hex(self.cube_coords + (DIR_N * distance))
+	var current = new_hex(self.cube_coords + (DIR_N * distance))
 	for dir in [DIR_SE, DIR_S, DIR_SW, DIR_NW, DIR_N, DIR_NE]:
 		for step in range(distance):
 			cells.append(current)
@@ -181,7 +181,7 @@ func line_to(target):
 	var path = []
 	for dist in range(steps):
 		var lerped = cube_coords.linear_interpolate(nudged_target, dist / steps)
-		path.append(create_hex(round_coords(lerped)))
-	path.append(create_hex(target))
+		path.append(new_hex(round_coords(lerped)))
+	path.append(new_hex(target))
 	return path
 	
