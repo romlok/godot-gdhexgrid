@@ -1,9 +1,13 @@
-# Representation of a flat-topped hexagonal grid.
-#
-# The hex grid uses +x => NE and +y => N.
-# The projected plane uses +x => E and +y => S,
-# because this maps closest to Godot's 2D axes, and also x/z in 3D.
-#
+"""
+	A converter between hex and Godot-space coordinate systems.
+	
+	The hex grid uses +x => NE and +y => N, whereas
+	the projection to Godot-space uses +x => E, +y => S.
+	
+	We map hex coordinates to Godot-space with +y flipped to be the down vector
+	so that it maps neatly to both Godot's 2D coordinate system, and also to
+	x,z planes in 3D space.
+"""
 extends Node
 
 var HexCell = preload("./HexCell.gd").new()

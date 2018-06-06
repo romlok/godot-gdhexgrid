@@ -1,14 +1,17 @@
-# A hexagonal grid cell
-#
-# Ref: https://www.redblobgames.com/grids/hexagons/
-#
-# The hexes use a flat-topped orientation,
-# the axial coordinates use +y => N, +x => NE,
-# and offset coords have odd rows shifted up half a step.
-#
-# Using y instead of z makes following the reference more tricky,
-# but is more consistent with Godot's Vector2 objects (which have x and y).
-
+"""
+	A single cell of a hexagonal grid.
+	
+	There are many ways to orient a hex grid, this library was written
+	with the following assumptions:
+	
+	* The hexes use a flat-topped orientation;
+	* Axial coordinates use +x => NE; +y => N;
+	* Offset coords have odd rows shifted up half a step.
+	
+	Using x,y instead of the reference's preferred x,z for axial coords makes
+	following along with the reference a little more tricky, but is less confusing
+	when using Godot's Vector2(x, y) objects.
+"""
 extends Node
 
 # We use unit-size flat-topped hexes
