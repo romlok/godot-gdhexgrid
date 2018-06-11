@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 512, 300 )
 
-[node name="2D Demo" type="Node"]
+[node name="2D Demo" type="Node" index="0"]
 
 [node name="Area2D" type="Area2D" parent="." index="0"]
 
@@ -29,8 +29,7 @@ shape = SubResource( 1 )
 
 [node name="Highlight" type="Polygon2D" parent="Area2D" index="1"]
 
-scale = Vector2( 50, 50 )
-polygon = PoolVector2Array( -0.25, 0.433012, 0.25, 0.433012, 0.5, 0, 0.25, -0.433012, -0.25, -0.433012, -0.5, 0 )
+polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )
 uv = PoolVector2Array(  )
 color = Color( 1, 1, 1, 1 )
 vertex_colors = PoolColorArray(  )
@@ -44,7 +43,7 @@ invert_enable = false
 invert_border = 100.0
 _sections_unfolded = [ "Transform" ]
 
-[node name="Label" type="Label" parent="Area2D" index="2"]
+[node name="Label" type="Label" parent="Area2D/Highlight" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -66,7 +65,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="AreaCoords" type="Label" parent="Area2D" index="3"]
+[node name="AreaCoords" type="Label" parent="Area2D/Highlight" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -88,7 +87,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Label2" type="Label" parent="Area2D" index="4"]
+[node name="Label2" type="Label" parent="Area2D/Highlight" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -110,7 +109,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="HexCoords" type="Label" parent="Area2D" index="5"]
+[node name="HexCoords" type="Label" parent="Area2D/Highlight" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0

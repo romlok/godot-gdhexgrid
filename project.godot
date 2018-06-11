@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="HexGrid"
-run/main_scene="res://test/test.tscn"
+run/main_scene="res://demo_2d.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
