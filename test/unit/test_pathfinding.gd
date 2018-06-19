@@ -1,0 +1,151 @@
+extends "res://addons/gut/test.gd"
+
+var HexGrid = load("res://HexGrid.gd")
+var grid
+var map
+# This is the hex map we'll test with:
+# remember: +y is N, +x is NE
+"""
+	                     .
+	                  .
+	               .     .
+	            .     .
+	         .     .     .
+	      .     .     .
+	   .     .     .     .
+	.     O     B     .
+	   OF    O     .     C
+	.     E     O     .
+	   O     O     D
+	.     O     .
+	   .     .
+	.     A
+	   .
+	. # <- (0, 0)
+"""
+var a_pos = Vector2(2, 0)
+var b_pos = Vector2(4, 2)
+var c_pos = Vector2(7, 0)
+var d_pos = Vector2(5, 0)
+var e_pos = Vector2(2, 2)
+var f_pos = Vector2(1, 3)
+var obstacles = [
+	Vector2(2, 1),
+	Vector2(3, 1),
+	Vector2(4, 1),
+	Vector2(1, 2),
+	Vector2(3, 2),
+	Vector2(1, 3),
+	Vector2(2, 3),
+]
+
+func setup():
+	grid = HexGrid.new()
+	grid.set_bounds(Vector2(0, 0), Vector2(7, 4))
+	grid.add_obstacles(obstacles)
+
+func test_populated_grid():
+	# Make sure there's things in the grid
+	assert_eq(grid.get_obstacles().size, obstacles.size())
+	
+
+func check_path(got, expected):
+	# Assert that the gotten path was the expected route
+	assert_eq(got.size(), expected.size())
+	for idx in range(got.size()):
+		var hex = got[idx]
+		var check = expected[idx]
+		if typeof(check) == TYPE_ARRAY:
+			# In case of multiple valid paths
+			assert_has(check, hex.axial_coords)
+		else:
+			assert_eq(check, hex.axial_coords)
+		
+func test_straight_line():
+	# Path between A and C is straight
+	var path = [
+		a_pos,
+		Vector2(3, 0),
+		Vector2(4, 0),
+		Vector2(5, 0),
+		Vector2(6, 0),
+		c_pos,
+	]
+	check_path(grid.get_path(a_pos, c_pos), path)
+	
+func test_wonky_line():
+	# Path between B and C is a bit wonky
+	var path = [
+		b_pos,
+		[Vector2(5, 1), Vector2(5, 2)],
+		[Vector2(6, 0), Vector2(6, 1)],
+		c_pos,
+	]
+	check_path(grid.get_path(b_pos, c_pos), path)
+	
+func test_obstacle():
+	# Path between A and B should go around the bottom
+	var path = [
+		a_pos,
+		Vector2(3, 0),
+		Vector2(4, 0),
+		Vector2(5, 0),
+		Vector2(5, 1),
+		Vector2(4, 2),
+		b_pos,
+	]
+	check_path(grid.get_path(a_pos, b_pos), path)
+	
+func test_rough_terrain():
+	# Path between A and B depends on the toughness of D
+	var short_path = [
+		a_pos,
+		Vector2(4, 0),
+		Vector2(5, 0),
+		Vector2(5, 1),
+		Vector2(4, 2),
+		b_pos,
+	]
+	var long_path = [
+		a_pos,
+		Vector2(1, 1),
+		Vector2(0, 2),
+		Vector2(0, 3),
+		Vector2(0, 4),
+		Vector2(1, 4),
+		Vector2(2, 4),
+		Vector2(3, 3),
+		b_pos,
+	]
+	pending()
+	
+func test_exception():
+	# D is impassable, so path between A and B should go around the top as well
+	var path = [
+		a_pos,
+		Vector2(1, 1),
+		Vector2(0, 2),
+		Vector2(0, 3),
+		Vector2(0, 4),
+		Vector2(1, 4),
+		Vector2(2, 4),
+		Vector2(3, 3),
+		b_pos,
+	]
+	check_path(grid.get_path(a_pos, b_pos, [d_pos]), path)
+	
+func test_inaccessible():
+	# E is inaccessible!
+	var path = grid.get_path(a_pos, e_pos)
+	assert_eq(path.size(), 0)
+	
+func test_obstacle_neighbour():
+	# Sometimes we can't get to something, but we can get next to it.
+	var path = [
+		a_pos,
+		Vector2(1, 1),
+		Vector2(0, 2),
+		Vector2(0, 3),
+	]
+	check_path(grid.get_path(a_pos, f_pos), path)
+	
