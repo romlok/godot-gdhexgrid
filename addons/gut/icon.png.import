@@ -7,10 +7,7 @@ path="res://.import/icon.png-91b084043b8aaf2f1c906e7b9fa92969.stex"
 [deps]
 
 source_file="res://addons/gut/icon.png"
-source_md5="eabe0e5cf43d82b1582b4d74e1bf4c67"
-
 dest_files=[ "res://.import/icon.png-91b084043b8aaf2f1c906e7b9fa92969.stex" ]
-dest_md5="9fa23b4826a88958b788e9bb8503a910"
 
 [params]
 
