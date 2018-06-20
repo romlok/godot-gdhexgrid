@@ -40,6 +40,10 @@ var base_hex_size = Vector2(1, sqrt(3)/2)
 var hex_size
 var hex_transform
 var hex_transform_inv
+# Pathfinding obstacles {Vector2: cost}
+# A zero cost means impassable
+var path_obstacles = {}
+var path_bounds = Rect2()
 
 
 func _init():
@@ -58,6 +62,9 @@ func set_hex_scale(scale):
 	hex_transform_inv = hex_transform.affine_inverse()
 	
 
+"""
+	Converting between hex-grid and 2D spatial coordinates
+"""
 func get_hex_center(hex):
 	# Returns hex's centre position on the projection plane
 	hex = HexCell.new(hex)
@@ -67,3 +74,25 @@ func get_hex_at(coords):
 	# Returns a HexCell at the given Vector2 on the projection plane
 	return HexCell.new(hex_transform_inv * coords)
 	
+
+"""
+	Pathfinding
+"""
+func set_bounds(rect):
+	# Set the absolute bounds of the pathfinding area
+	path_bounds = Rect2(rect.position, rect.size)
+	
+func get_obstacles():
+	return path_obstacles
+	
+func add_obstacles(val, cost=0):
+	# Store the given coordinate/s as obstacles
+	if not typeof(val) == TYPE_ARRAY:
+		val = [val]
+	for coords in val:
+		path_obstacles[Vector2(coords.x, coords.y)] = cost
+	
+func get_path(from, to, exceptions=[]):
+	# Light a starry path
+	## TODO
+	return []

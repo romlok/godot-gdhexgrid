@@ -41,12 +41,12 @@ var obstacles = [
 
 func setup():
 	grid = HexGrid.new()
-	grid.set_bounds(Vector2(0, 0), Vector2(7, 4))
+	grid.set_bounds(Rect2(Vector2(0, 0), Vector2(7, 4)))
 	grid.add_obstacles(obstacles)
 
 func test_populated_grid():
 	# Make sure there's things in the grid
-	assert_eq(grid.get_obstacles().size, obstacles.size())
+	assert_eq(grid.get_obstacles().size(), obstacles.size())
 	
 
 func check_path(got, expected):
