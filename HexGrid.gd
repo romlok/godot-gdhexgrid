@@ -118,7 +118,13 @@ func get_path(start, goal, exceptions=[]):
 		for next_hex in HexCell.new(current).get_all_adjacent():
 			var next = next_hex.axial_coords
 			var next_cost = get_cost(next)
-			if not next_cost:
+			if next == goal and not next_cost:
+				# Our goal is an obstacle, but we're next to it
+				# so our work here is done
+				came_from[next] = current
+				frontier.clear()
+				break
+			if not next_cost or next in exceptions:
 				# We shall not pass
 				continue
 			next_cost += cost_so_far[current]
@@ -131,11 +137,14 @@ func get_path(start, goal, exceptions=[]):
 				var idx = frontier.bsearch_custom(item, self, "comp_priority_item")
 				frontier.insert(idx, item)
 				came_from[next] = current
-	# Follow the path back where we came_from
 	if not goal in came_from:
 		# Not found
 		return []
-	var path = [HexCell.new(goal)]
+	# Follow the path back where we came_from
+	var path = []
+	if not goal in path_obstacles:
+		# We only include the goal if we can path there
+		path.append(HexCell.new(goal))
 	var current = goal
 	while current != start:
 		current = came_from[current]

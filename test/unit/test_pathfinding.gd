@@ -70,7 +70,7 @@ func test_costs():
 func check_path(got, expected):
 	# Assert that the gotten path was the expected route
 	assert_eq(got.size(), expected.size(), "Path should be as long as expected")
-	for idx in range(got.size()):
+	for idx in range(min(got.size(), expected.size())):
 		var hex = got[idx]
 		var check = expected[idx]
 		if typeof(check) == TYPE_ARRAY:
