@@ -44,6 +44,7 @@ var hex_transform_inv
 # A zero cost means impassable
 var path_obstacles = {}
 var path_bounds = Rect2()
+var path_cost_default = 1.0
 
 
 func _init():
@@ -77,10 +78,13 @@ func get_hex_at(coords):
 
 """
 	Pathfinding
+	
+	Ref: https://www.redblobgames.com/pathfinding/a-star/introduction.html
 """
-func set_bounds(rect):
-	# Set the absolute bounds of the pathfinding area
-	path_bounds = Rect2(rect.position, rect.size)
+func set_bounds(min_coords, max_coords):
+	# Set the absolute bounds of the pathfinding area in grid coords
+	# The given coords will be inside the boundary (hence the extra (1, 1))
+	path_bounds = Rect2(min_coords, min_coords + max_coords + Vector2(1, 1))
 	
 func get_obstacles():
 	return path_obstacles
@@ -92,7 +96,54 @@ func add_obstacles(val, cost=0):
 	for coords in val:
 		path_obstacles[Vector2(coords.x, coords.y)] = cost
 	
-func get_path(from, to, exceptions=[]):
-	# Light a starry path
-	## TODO
-	return []
+func get_cost(coords):
+	# Returns the cost of moving to the given hex
+	if coords in path_obstacles:
+		return path_obstacles[coords]
+	if not path_bounds.has_point(coords):
+		# Out of bounds
+		return 0
+	return path_cost_default
+	
+	
+func get_path(start, goal, exceptions=[]):
+	# Light a starry path from the start to the goal, inclusive
+	var frontier = [make_priority_item(start, 0)]
+	var came_from = {start: null}
+	var cost_so_far = {start: 0}
+	while not frontier.empty():
+		var current = frontier.pop_front().v
+		if current == goal:
+			break
+		for next_hex in HexCell.new(current).get_all_adjacent():
+			var next = next_hex.axial_coords
+			var next_cost = get_cost(next)
+			if not next_cost:
+				# We shall not pass
+				continue
+			next_cost += cost_so_far[current]
+			if not next in cost_so_far or next_cost < cost_so_far[next]:
+				# New shortest path to that node
+				cost_so_far[next] = next_cost
+				var priority = next_cost + next_hex.distance_to(goal)
+				# Insert into the frontier
+				var item = make_priority_item(next, priority)
+				var idx = frontier.bsearch_custom(item, self, "comp_priority_item")
+				frontier.insert(idx, item)
+				came_from[next] = current
+	# Follow the path back where we came_from
+	if not goal in came_from:
+		# Not found
+		return []
+	var path = [HexCell.new(goal)]
+	var current = goal
+	while current != start:
+		current = came_from[current]
+		path.push_front(HexCell.new(current))
+	return path
+	
+# Used to make a priority queue out of an array
+func make_priority_item(val, priority):
+	return {"v": val, "p": priority}
+func comp_priority_item(a, b):
+	return a.p < b.p

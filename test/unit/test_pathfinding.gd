@@ -41,17 +41,35 @@ var obstacles = [
 
 func setup():
 	grid = HexGrid.new()
-	grid.set_bounds(Rect2(Vector2(0, 0), Vector2(7, 4)))
+	grid.set_bounds(Vector2(0, 0), Vector2(7, 4))
 	grid.add_obstacles(obstacles)
 
 func test_populated_grid():
 	# Make sure there's things in the grid
 	assert_eq(grid.get_obstacles().size(), obstacles.size())
 	
+func test_costs():
+	# Test that the price is right
+	var open = grid.path_cost_default
+	assert_eq(grid.get_cost(Vector2(1, 1)), open, "Open hex is open")
+	assert_eq(grid.get_cost(Vector2(2, 1)), 0, "Obstacle being obstructive")
+	# Check that the boundary works properly
+	assert_eq(grid.get_cost(Vector2(0, 0)), open, "SW is open")
+	assert_eq(grid.get_cost(Vector2(0, 4)), open, "W is open")
+	assert_eq(grid.get_cost(Vector2(7, 0)), open, "E is open")
+	assert_eq(grid.get_cost(Vector2(7, 4)), open, "NE is open")
+	assert_eq(grid.get_cost(Vector2(8, 2)), 0, "Too much X is blocked")
+	assert_eq(grid.get_cost(Vector2(6, 5)), 0, "Too much Y is blocked")
+	assert_eq(grid.get_cost(Vector2(-1, 2)), 0, "Too little X is blocked")
+	assert_eq(grid.get_cost(Vector2(6, -1)), 0, "Too little Y is blocked")
+	# Test partial obstacle
+	grid.add_obstacles(Vector2(1, 1), 1.337)
+	assert_eq(grid.get_cost(Vector2(1, 1)), 1.337, "9")
+	
 
 func check_path(got, expected):
 	# Assert that the gotten path was the expected route
-	assert_eq(got.size(), expected.size())
+	assert_eq(got.size(), expected.size(), "Path should be as long as expected")
 	for idx in range(got.size()):
 		var hex = got[idx]
 		var check = expected[idx]
@@ -91,7 +109,6 @@ func test_obstacle():
 		Vector2(4, 0),
 		Vector2(5, 0),
 		Vector2(5, 1),
-		Vector2(4, 2),
 		b_pos,
 	]
 	check_path(grid.get_path(a_pos, b_pos), path)
