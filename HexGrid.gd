@@ -80,10 +80,15 @@ func get_hex_at(coords):
 	Pathfinding
 	
 	Ref: https://www.redblobgames.com/pathfinding/a-star/introduction.html
+	
+	We use axial coords for everything internally (to use Rect2.has_point),
+	but the methods accept cube or axial coords, or HexCell instances.
 """
 func set_bounds(min_coords, max_coords):
 	# Set the absolute bounds of the pathfinding area in grid coords
 	# The given coords will be inside the boundary (hence the extra (1, 1))
+	min_coords = HexCell.new(min_coords).axial_coords
+	max_coords = HexCell.new(max_coords).axial_coords
 	path_bounds = Rect2(min_coords, min_coords + max_coords + Vector2(1, 1))
 	
 func get_obstacles():
@@ -94,10 +99,12 @@ func add_obstacles(val, cost=0):
 	if not typeof(val) == TYPE_ARRAY:
 		val = [val]
 	for coords in val:
+		coords = HexCell.new(coords).axial_coords
 		path_obstacles[Vector2(coords.x, coords.y)] = cost
 	
 func get_cost(coords):
 	# Returns the cost of moving to the given hex
+	coords = HexCell.new(coords).axial_coords
 	if coords in path_obstacles:
 		return path_obstacles[coords]
 	if not path_bounds.has_point(coords):
@@ -108,6 +115,8 @@ func get_cost(coords):
 	
 func get_path(start, goal, exceptions=[]):
 	# Light a starry path from the start to the goal, inclusive
+	start = HexCell.new(start).axial_coords
+	goal = HexCell.new(goal).axial_coords
 	var frontier = [make_priority_item(start, 0)]
 	var came_from = {start: null}
 	var cost_so_far = {start: 0}

@@ -1,5 +1,6 @@
 extends "res://addons/gut/test.gd"
 
+var HexCell = load("res://HexCell.gd")
 var HexGrid = load("res://HexGrid.gd")
 var grid
 var map
@@ -47,12 +48,15 @@ func setup():
 func test_populated_grid():
 	# Make sure there's things in the grid
 	assert_eq(grid.get_obstacles().size(), obstacles.size())
+	# Test adding via a HexCell instance
+	grid.add_obstacles(HexCell.new(Vector2(0, 0)))
+	assert_eq(grid.get_obstacles()[Vector2(0, 0)], 0)
 	
 func test_costs():
 	# Test that the price is right
 	var open = grid.path_cost_default
-	assert_eq(grid.get_cost(Vector2(1, 1)), open, "Open hex is open")
-	assert_eq(grid.get_cost(Vector2(2, 1)), 0, "Obstacle being obstructive")
+	assert_eq(grid.get_cost(HexCell.new(Vector2(1, 1))), open, "Open hex is open")
+	assert_eq(grid.get_cost(Vector3(2, 1, -3)), 0, "Obstacle being obstructive")
 	# Check that the boundary works properly
 	assert_eq(grid.get_cost(Vector2(0, 0)), open, "SW is open")
 	assert_eq(grid.get_cost(Vector2(0, 4)), open, "W is open")
@@ -99,7 +103,7 @@ func test_wonky_line():
 		[Vector2(6, 0), Vector2(6, 1)],
 		c_pos,
 	]
-	check_path(grid.get_path(b_pos, c_pos), path)
+	check_path(grid.get_path(HexCell.new(b_pos), HexCell.new(c_pos)), path)
 	
 func test_obstacle():
 	# Path between A and B should go around the bottom
