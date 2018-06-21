@@ -27,7 +27,70 @@
 	
 		Returns HexCell whose grid position contains the given Godot-space coordinates.
 	
-
+	### Path-finding
+	
+	HexGrid also includes an implementation of the A* pathfinding algorithm.
+	The class can be used to populate an internal representation of a game grid
+	with obstacles to traverse.
+	
+	#### func set_bounds(min_coords, max_coords)
+	
+		Sets the hard outer limits of the path-finding grid.
+		
+		The coordinates given are the min and max corners *inside* a bounding
+		square (diamond in hex visualisation) region. Any hex outside that area
+		is considered an impassable obstacle.
+		
+		The default bounds consider only the origin to be inside, so you're probably
+		going to want to do something about that.
+	
+	#### func get_obstacles()
+	
+		Returns a dict of all obstacles and their costs
+		
+		The keys are Vector2s of the axial coordinates, the values will be the
+		cost value. Zero cost means an impassable obstacle.
+	
+	#### func add_obstacles(vals, cost=0)
+	
+		Adds one or more obstacles to the path-finding grid
+		
+		The given coordinates (axial or cube), HexCell instance, or array thereof,
+		will be added as path-finding obstacles with the given cost. A zero cost
+		indicates an impassable obstacle.
+	
+	#### func remove_obstacles(vals)
+	
+		Removes one or more obstacles from the path-finding grid
+		
+		The given coordinates (axial or cube), HexCell instance, or array thereof,
+		will be removed as obstacles from the path-finding grid.
+		
+	#### func get_cost(coords)
+	
+		Returns the movement cost of the specified grid position.
+	
+	#### func get_path(start, goal, exceptions=[])
+	
+		Calculates an A* path from the start to the goal.
+		
+		Returns a list of HexCell instances charting the path from the given start
+		coordinates to the goal, including both ends of the journey.
+		
+		Exceptions can be specified as the third parameter, and will act as
+		impassable obstacles for the purposes of this call of the function.
+		This can be used for pathing around obstacles which may change position
+		(eg. enemy playing pieces), without having to update the grid's list of
+		obstacles every time something moves.
+		
+		If the goal is an impassable location, the path will terminate at the nearest
+		adjacent coordinate. In this instance, the goal hex will not be included in
+		the returned array.
+		
+		If there is no path possible to the goal, or any hex adjacent to it, an
+		empty array is returned. But the algorithm will only know that once it's
+		visited every tile it can reach, so try not to path to the impossible.
+	
 """
 extends Resource
 

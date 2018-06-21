@@ -57,6 +57,8 @@ func test_populated_grid():
 	# Test removing an obstacle
 	grid.remove_obstacles(Vector2(0, 0))
 	assert_does_not_have(grid.get_obstacles(), Vector2(0, 0))
+	# Make sure removing a non-obstacle doesn't error
+	grid.remove_obstacles(Vector2(0, 0))
 	
 func test_costs():
 	# Test that the price is right
