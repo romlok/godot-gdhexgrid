@@ -51,6 +51,12 @@ func test_populated_grid():
 	# Test adding via a HexCell instance
 	grid.add_obstacles(HexCell.new(Vector2(0, 0)))
 	assert_eq(grid.get_obstacles()[Vector2(0, 0)], 0)
+	# Test replacing an obstacle
+	grid.add_obstacles(Vector2(0, 0), 2)
+	assert_eq(grid.get_obstacles()[Vector2(0, 0)], 2)
+	# Test removing an obstacle
+	grid.remove_obstacles(Vector2(0, 0))
+	assert_does_not_have(grid.get_obstacles(), Vector2(0, 0))
 	
 func test_costs():
 	# Test that the price is right
@@ -121,10 +127,10 @@ func test_rough_terrain():
 	# Path between A and B depends on the toughness of D
 	var short_path = [
 		a_pos,
+		Vector2(3, 0),
 		Vector2(4, 0),
-		Vector2(5, 0),
+		d_pos,
 		Vector2(5, 1),
-		Vector2(4, 2),
 		b_pos,
 	]
 	var long_path = [
@@ -138,7 +144,19 @@ func test_rough_terrain():
 		Vector2(3, 3),
 		b_pos,
 	]
-	pending()
+	# The long path is 9 long, the short 6,
+	# so it should take the long path once d_pos costs more than 3 over default
+	var tests = {
+		grid.path_cost_default: short_path,
+		grid.path_cost_default + 1: short_path,
+		grid.path_cost_default + 2.9: short_path,
+		grid.path_cost_default + 3.1: long_path,
+		grid.path_cost_default + 50: long_path,
+		0: long_path,
+	}
+	for cost in tests:
+		grid.add_obstacles(d_pos, cost)
+		check_path(grid.get_path(a_pos, b_pos), tests[cost])
 	
 func test_exception():
 	# D is impassable, so path between A and B should go around the top as well

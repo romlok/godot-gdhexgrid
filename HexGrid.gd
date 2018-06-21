@@ -94,13 +94,21 @@ func set_bounds(min_coords, max_coords):
 func get_obstacles():
 	return path_obstacles
 	
-func add_obstacles(val, cost=0):
+func add_obstacles(vals, cost=0):
 	# Store the given coordinate/s as obstacles
-	if not typeof(val) == TYPE_ARRAY:
-		val = [val]
-	for coords in val:
+	if not typeof(vals) == TYPE_ARRAY:
+		vals = [vals]
+	for coords in vals:
 		coords = HexCell.new(coords).axial_coords
-		path_obstacles[Vector2(coords.x, coords.y)] = cost
+		path_obstacles[coords] = cost
+	
+func remove_obstacles(vals):
+	# Remove the given obstacle/s from the grid
+	if not typeof(vals) == TYPE_ARRAY:
+		vals = [vals]
+	for coords in vals:
+		coords = HexCell.new(coords).axial_coords
+		path_obstacles.erase(coords)
 	
 func get_cost(coords):
 	# Returns the cost of moving to the given hex
