@@ -45,6 +45,35 @@ func setup():
 	grid.set_bounds(Vector2(0, 0), Vector2(7, 4))
 	grid.add_obstacles(obstacles)
 
+func test_bounds():
+	# Push the boundaries
+	# Check that the test boundary works properly
+	assert_eq(grid.get_cost(Vector2(0, 0)), grid.path_cost_default, "SW is open")
+	assert_eq(grid.get_cost(Vector2(0, 4)), grid.path_cost_default, "W is open")
+	assert_eq(grid.get_cost(Vector2(7, 0)), grid.path_cost_default, "E is open")
+	assert_eq(grid.get_cost(Vector2(7, 4)), grid.path_cost_default, "NE is open")
+	assert_eq(grid.get_cost(Vector2(8, 2)), 0, "Too much X is blocked")
+	assert_eq(grid.get_cost(Vector2(6, 5)), 0, "Too much Y is blocked")
+	assert_eq(grid.get_cost(Vector2(-1, 2)), 0, "Too little X is blocked")
+	assert_eq(grid.get_cost(Vector2(6, -1)), 0, "Too little Y is blocked")
+func test_negative_bounds():
+	# Test negative space
+	grid = HexGrid.new()
+	grid.set_bounds(Vector2(-5, -5), Vector2(-2, -2))
+	assert_eq(grid.get_cost(Vector2(-2, -2)), grid.path_cost_default)
+	assert_eq(grid.get_cost(Vector2(-5, -5)), grid.path_cost_default)
+	assert_eq(grid.get_cost(Vector2(0, 0)), 0)
+	assert_eq(grid.get_cost(Vector2(-6, -3)), 0)
+	assert_eq(grid.get_cost(Vector2(-3, -1)), 0)
+func test_roundabounds():
+	# We can also go both ways
+	grid.set_bounds(Vector2(-3, -3), Vector2(2, 2))
+	assert_eq(grid.get_cost(Vector2(-3, -3)), grid.path_cost_default)
+	assert_eq(grid.get_cost(Vector2(2, 2)), grid.path_cost_default)
+	assert_eq(grid.get_cost(Vector2(0, 0)), grid.path_cost_default)
+	assert_eq(grid.get_cost(Vector2(-4, 0)), 0)
+	assert_eq(grid.get_cost(Vector2(0, 3)), 0)
+	
 func test_populated_grid():
 	# Make sure there's things in the grid
 	assert_eq(grid.get_obstacles().size(), obstacles.size())
@@ -62,18 +91,8 @@ func test_populated_grid():
 	
 func test_costs():
 	# Test that the price is right
-	var open = grid.path_cost_default
-	assert_eq(grid.get_cost(HexCell.new(Vector2(1, 1))), open, "Open hex is open")
+	assert_eq(grid.get_cost(HexCell.new(Vector2(1, 1))), grid.path_cost_default, "Open hex is open")
 	assert_eq(grid.get_cost(Vector3(2, 1, -3)), 0, "Obstacle being obstructive")
-	# Check that the boundary works properly
-	assert_eq(grid.get_cost(Vector2(0, 0)), open, "SW is open")
-	assert_eq(grid.get_cost(Vector2(0, 4)), open, "W is open")
-	assert_eq(grid.get_cost(Vector2(7, 0)), open, "E is open")
-	assert_eq(grid.get_cost(Vector2(7, 4)), open, "NE is open")
-	assert_eq(grid.get_cost(Vector2(8, 2)), 0, "Too much X is blocked")
-	assert_eq(grid.get_cost(Vector2(6, 5)), 0, "Too much Y is blocked")
-	assert_eq(grid.get_cost(Vector2(-1, 2)), 0, "Too little X is blocked")
-	assert_eq(grid.get_cost(Vector2(6, -1)), 0, "Too little Y is blocked")
 	# Test partial obstacle
 	grid.add_obstacles(Vector2(1, 1), 1.337)
 	assert_eq(grid.get_cost(Vector2(1, 1)), 1.337, "9")

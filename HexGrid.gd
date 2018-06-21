@@ -152,7 +152,7 @@ func set_bounds(min_coords, max_coords):
 	# The given coords will be inside the boundary (hence the extra (1, 1))
 	min_coords = HexCell.new(min_coords).axial_coords
 	max_coords = HexCell.new(max_coords).axial_coords
-	path_bounds = Rect2(min_coords, min_coords + max_coords + Vector2(1, 1))
+	path_bounds = Rect2(min_coords, (max_coords - min_coords) + Vector2(1, 1))
 	
 func get_obstacles():
 	return path_obstacles
