@@ -29,7 +29,7 @@
 	
 
 """
-extends Node
+extends Resource
 
 var HexCell = preload("./HexCell.gd")
 

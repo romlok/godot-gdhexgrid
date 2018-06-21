@@ -60,7 +60,7 @@
 		the start (current) hex, as well as the final target.
 
 """
-extends Node
+extends Resource
 
 # We use unit-size flat-topped hexes
 const size = Vector2(1, sqrt(3)/2)
