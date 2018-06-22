@@ -193,6 +193,21 @@ func test_exception():
 		b_pos,
 	]
 	check_path(grid.get_path(a_pos, b_pos, [d_pos]), path)
+func test_exception_hex():
+	# Same as the above, but providing an exceptional HexCell instance
+	var path = [
+		a_pos,
+		Vector2(1, 1),
+		Vector2(0, 2),
+		Vector2(0, 3),
+		Vector2(0, 4),
+		Vector2(1, 4),
+		Vector2(2, 4),
+		Vector2(3, 3),
+		b_pos,
+	]
+	check_path(grid.get_path(a_pos, b_pos, [HexCell.new(d_pos)]), path)
+	
 func test_exceptional_goal():
 	# If D is impassable, we should path to its neighbour
 	var path = [

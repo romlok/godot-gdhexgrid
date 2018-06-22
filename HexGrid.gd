@@ -188,6 +188,12 @@ func get_path(start, goal, exceptions=[]):
 	# Light a starry path from the start to the goal, inclusive
 	start = HexCell.new(start).axial_coords
 	goal = HexCell.new(goal).axial_coords
+	# Make sure all the exceptions are axial coords
+	var exc = []
+	for ex in exceptions:
+		exc.append(HexCell.new(ex).axial_coords)
+	exceptions = exc
+	# Now we begin the A* search
 	var frontier = [make_priority_item(start, 0)]
 	var came_from = {start: null}
 	var cost_so_far = {start: 0}
@@ -217,13 +223,14 @@ func get_path(start, goal, exceptions=[]):
 				var idx = frontier.bsearch_custom(item, self, "comp_priority_item")
 				frontier.insert(idx, item)
 				came_from[next] = current
+	
 	if not goal in came_from:
 		# Not found
 		return []
 	# Follow the path back where we came_from
 	var path = []
 	if not (goal in path_obstacles or goal in exceptions):
-		# We only include the goal if we can path there
+		# We only include the goal if it's traversable
 		path.append(HexCell.new(goal))
 	var current = goal
 	while current != start:
