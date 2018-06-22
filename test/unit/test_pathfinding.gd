@@ -193,6 +193,14 @@ func test_exception():
 		b_pos,
 	]
 	check_path(grid.get_path(a_pos, b_pos, [d_pos]), path)
+func test_exceptional_goal():
+	# If D is impassable, we should path to its neighbour
+	var path = [
+		a_pos,
+		Vector2(3, 0),
+		Vector2(4, 0),
+	]
+	check_path(grid.get_path(a_pos, d_pos, [d_pos]), path)
 	
 func test_inaccessible():
 	# E is inaccessible!

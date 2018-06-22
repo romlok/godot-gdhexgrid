@@ -198,13 +198,13 @@ func get_path(start, goal, exceptions=[]):
 		for next_hex in HexCell.new(current).get_all_adjacent():
 			var next = next_hex.axial_coords
 			var next_cost = get_cost(next)
-			if next == goal and not next_cost:
-				# Our goal is an obstacle, but we're next to it
-				# so our work here is done
-				came_from[next] = current
-				frontier.clear()
-				break
 			if not next_cost or next in exceptions:
+				if next == goal:
+					# Our goal is an obstacle, but we're next to it
+					# so our work here is done
+					came_from[next] = current
+					frontier.clear()
+					break
 				# We shall not pass
 				continue
 			next_cost += cost_so_far[current]
@@ -222,7 +222,7 @@ func get_path(start, goal, exceptions=[]):
 		return []
 	# Follow the path back where we came_from
 	var path = []
-	if not goal in path_obstacles:
+	if not (goal in path_obstacles or goal in exceptions):
 		# We only include the goal if we can path there
 		path.append(HexCell.new(goal))
 	var current = goal
