@@ -3,7 +3,7 @@
 [ext_resource path="res://addons/gut/gut.gd" type="Script" id=1]
 [ext_resource path="res://addons/gut/icon.png" type="Texture" id=2]
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 [node name="Gut" type="WindowDialog" parent="." index="0"]
 

@@ -64,6 +64,7 @@ extends Resource
 
 # We use unit-size flat-topped hexes
 const size = Vector2(1, sqrt(3)/2)
+# Directions of neighbouring cells
 const DIR_N = Vector3(0, 1, -1)
 const DIR_NE = Vector3(1, 0, -1)
 const DIR_SE = Vector3(1, -1, 0)
