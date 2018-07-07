@@ -97,6 +97,12 @@ will be removed as obstacles from the path-finding grid.
 
 Returns a dict of all barriers in the grid.
 
+A barrier is an edge of a hex which is either impassable, or has a
+non-zero cost to traverse. If two adjacent hexes both have barriers on
+their shared edge, their costs are summed.
+Barrier costs are in addition to the obstacle (or default) cost of
+moving to a hex.
+
 The outer dict is a mapping of axial coords to an inner barrier dict.
 The inner dict maps between HexCell.DIR_* directions and the cost of
 travel in that direction. A cost of zero indicates an impassable barrier.
