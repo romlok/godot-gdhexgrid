@@ -142,6 +142,14 @@
 extends Resource
 
 var HexCell = preload("./HexCell.gd")
+# Duplicate these from HexCell for ease of access
+const DIR_N = Vector3(0, 1, -1)
+const DIR_NE = Vector3(1, 0, -1)
+const DIR_SE = Vector3(1, -1, 0)
+const DIR_S = Vector3(0, -1, 1)
+const DIR_SW = Vector3(-1, 0, 1)
+const DIR_NW = Vector3(-1, 1, 0)
+const DIR_ALL = [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]
 
 # Allow the user to scale the hex for fake perspective or somesuch
 export(Vector2) var hex_scale = Vector2(1, 1) setget set_hex_scale
