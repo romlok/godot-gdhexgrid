@@ -71,6 +71,7 @@ const DIR_SE = Vector3(1, -1, 0)
 const DIR_S = Vector3(0, -1, 1)
 const DIR_SW = Vector3(-1, 0, 1)
 const DIR_NW = Vector3(-1, 1, 0)
+const DIR_ALL = [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]
 
 
 # Cube coords are canonical
@@ -185,7 +186,7 @@ func get_adjacent(dir):
 func get_all_adjacent():
 	# Returns an array of HexCell instances representing adjacent locations
 	var cells = Array()
-	for coord in [DIR_N, DIR_NE, DIR_SE, DIR_S, DIR_SW, DIR_NW]:
+	for coord in DIR_ALL:
 		cells.append(new_hex(self.cube_coords + coord))
 	return cells
 	
