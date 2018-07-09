@@ -47,6 +47,16 @@ func test_hex_to_projection_squished():
 	for hex in tests:
 		assert_eq(tests[hex], grid.get_hex_center(hex))
 	
+func test_hex_to_3d_projection():
+	var tests = {
+		Vector2(0, 0): Vector3(0, 0, 0),
+		Vector2(0, 1): Vector3(0, 0, -h),
+		Vector2(1, 0): Vector3(w*0.75, 0, -h/2),
+		Vector2(-4, -3): Vector3(4 * (-w*0.75), 0, (3 * h) + (4 * h / 2)),
+	}
+	for hex in tests:
+		assert_eq(tests[hex], grid.get_hex_center3(hex))
+	
 
 func test_projection_to_hex():
 	var tests = {

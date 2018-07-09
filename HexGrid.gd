@@ -206,7 +206,7 @@ func get_hex_at(coords):
 	
 func get_hex_center3(hex):
 	# Returns hex's centre position as a Vector3 on the plane y=0
-	var coords = get_hex_center(hex).axial_coords
+	var coords = get_hex_center(hex)
 	return Vector3(coords.x, 0, coords.y)
 	
 
