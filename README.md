@@ -57,6 +57,9 @@ coordinate, or a Vector2 axial coordinate.
 
 Returns HexCell whose grid position contains the given Godot-space coordinates.
 
+The given value can either be a Vector2 on the grid's plane
+or a Vector3, in which case its (x, z) coordinates will be used.
+
 
 ### HexGrid pathfinding
 

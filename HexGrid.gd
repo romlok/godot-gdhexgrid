@@ -33,6 +33,10 @@
 	#### func get_hex_at(coords)
 	
 		Returns HexCell whose grid position contains the given Godot-space coordinates.
+		
+		The given value can either be a Vector2 on the grid's plane
+		or a Vector3, in which case its (x, z) coordinates will be used.
+	
 	
 	### Path-finding
 	
@@ -201,7 +205,10 @@ func get_hex_center(hex):
 	return hex_transform * hex.axial_coords
 	
 func get_hex_at(coords):
-	# Returns a HexCell at the given Vector2 on the projection plane
+	# Returns a HexCell at the given Vector2/3 on the projection plane
+	# If the given value is a Vector3, its x,z coords will be used
+	if typeof(coords) == TYPE_VECTOR3:
+		coords = Vector2(coords.x, coords.z)
 	return HexCell.new(hex_transform_inv * coords)
 	
 func get_hex_center3(hex):

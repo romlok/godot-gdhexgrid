@@ -68,6 +68,9 @@ func test_projection_to_hex():
 		Vector2(-w - 0.01, 0): Vector2(-2, 1),
 		Vector2(-w, 0.01): Vector2(-1, 0),
 		Vector2(-w, -0.01): Vector2(-1, 1),
+		# Also Vector3s are valid input
+		Vector3(0, 0, 0): Vector2(0, 0),
+		Vector3(w / 2 - 0.01, 12, h / 2): Vector2(1, -1),
 	}
 	for coords in tests:
 		assert_eq(tests[coords], grid.get_hex_at(coords).axial_coords)
