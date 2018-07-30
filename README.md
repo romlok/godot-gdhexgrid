@@ -46,12 +46,15 @@ Returns the Godot-space coordinate of the center of the given hex coordinates.
 The coordinates can be given as either a HexCell instance; a Vector3 cube
 coordinate, or a Vector2 axial coordinate.
 
-#### func get_hex_center3(hex)
+#### func get_hex_center3(hex [, y])
 
-Returns the Vector3 of the center of the given hex on the plane y=0.
+Returns the Godot-space Vector3 of the center of the given hex.
 
 The coordinates can be given as either a HexCell instance; a Vector3 cube
 coordinate, or a Vector2 axial coordinate.
+
+If a second parameter is given, it will be used for the y value in the
+returned Vector3. Otherwise, the y value will be 0.
 
 #### func get_hex_at(coords)
 

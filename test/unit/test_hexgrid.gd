@@ -56,6 +56,11 @@ func test_hex_to_3d_projection():
 	}
 	for hex in tests:
 		assert_eq(tests[hex], grid.get_hex_center3(hex))
+	# Also test the second parameter
+	assert_eq(
+		Vector3(0, 1.2, 0),
+		grid.get_hex_center3(Vector2(0, 0), 1.2)
+	)
 	
 
 func test_projection_to_hex():
