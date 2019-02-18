@@ -153,7 +153,7 @@
 		visited every tile it can reach, so try not to path to the impossible.
 	
 """
-extends Resource
+extends Reference
 
 var HexCell = preload("./HexCell.gd")
 # Duplicate these from HexCell for ease of access

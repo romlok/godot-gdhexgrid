@@ -13,7 +13,7 @@ func _ready():
 	
 
 func _unhandled_input(event):
-	if event.position:
+	if 'position' in event:
 		var relative_pos = self.transform.affine_inverse() * event.position
 		# Display the coords used
 		if area_coords != null:
