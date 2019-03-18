@@ -3,26 +3,11 @@
 [ext_resource path="res://addons/gut/gut.gd" type="Script" id=1]
 [ext_resource path="res://addons/gut/icon.png" type="Texture" id=2]
 
-[node name="Node" type="Node" index="0"]
+[node name="Node" type="Node"]
 
-[node name="Gut" type="WindowDialog" parent="." index="0"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Gut" type="WindowDialog" parent="."]
 margin_right = 48.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-popup_exclusive = false
-window_title = ""
-resizable = false
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
@@ -45,5 +30,4 @@ _directory3 = ""
 _directory4 = ""
 _directory5 = ""
 _directory6 = ""
-
 
