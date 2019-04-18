@@ -381,7 +381,7 @@ func find_path(start, goal, exceptions=[]):
 		return []
 	# Follow the path back where we came_from
 	var path = []
-	if not (goal in path_obstacles or goal in exceptions):
+	if not (get_hex_cost(goal) == 0 or goal in exceptions):
 		# We only include the goal if it's traversable
 		path.append(HexCell.new(goal))
 	var current = goal
