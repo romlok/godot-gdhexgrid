@@ -216,11 +216,11 @@ func distance_to(target):
 	# Returns the number of hops from this hex to another
 	# Can be passed cube or axial coords, or another HexCell instance
 	target = obj_to_coords(target)
-	return (
+	return int((
 			abs(cube_coords.x - target.x)
 			+ abs(cube_coords.y - target.y)
 			+ abs(cube_coords.z - target.z)
-			) / 2
+			) / 2)
 	
 func line_to(target):
 	# Returns an array of HexCell instances representing
@@ -231,7 +231,7 @@ func line_to(target):
 	var steps = distance_to(target)
 	var path = []
 	for dist in range(steps):
-		var lerped = cube_coords.linear_interpolate(nudged_target, dist / steps)
+		var lerped = cube_coords.linear_interpolate(nudged_target, float(dist) / steps)
 		path.append(new_hex(round_coords(lerped)))
 	path.append(new_hex(target))
 	return path
