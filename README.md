@@ -157,7 +157,7 @@ impassable barrier between the hexes.
 
 The direction should be provided as one of the HexCell.DIR_* values.
 
-#### func get_path(start, goal, exceptions=[])
+#### func find_path(start, goal, exceptions=[])
 
 Calculates an A* path from the start to the goal.
 	

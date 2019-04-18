@@ -131,7 +131,7 @@
 		
 		The direction should be provided as one of the HexCell.DIR_* values.
 	
-	#### func get_path(start, goal, exceptions=[])
+	#### func find_path(start, goal, exceptions=[])
 	
 		Calculates an A* path from the start to the goal.
 		
@@ -330,6 +330,13 @@ func get_move_cost(coords, direction):
 	
 
 func get_path(start, goal, exceptions=[]):
+	# DEPRECATED!
+	# The function `get_path` is used by Godot for something completely different,
+	# so we renamed it here to `find_path`.
+	push_warning("HexGrid.get_path has been deprecated, use find_path instead.")
+	return find_path(start, goal, exceptions)
+	
+func find_path(start, goal, exceptions=[]):
 	# Light a starry path from the start to the goal, inclusive
 	start = HexCell.new(start).axial_coords
 	goal = HexCell.new(goal).axial_coords
