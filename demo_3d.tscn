@@ -22,7 +22,7 @@ roughness = 0.0
 size = Vector2( 2, 1 )
 
 [sub_resource type="ViewportTexture" id=6]
-viewport_path = NodePath("HexGrid/Viewport")
+viewport_path = NodePath("HexGrid/Highlight/Viewport")
 
 [sub_resource type="SpatialMaterial" id=7]
 resource_local_to_scene = true
@@ -36,7 +36,7 @@ extents = Vector3( 4, 0.1, 2 )
 size = Vector3( 8, 0.2, 4 )
 
 [sub_resource type="ViewportTexture" id=10]
-viewport_path = NodePath("HexGrid2/Viewport")
+viewport_path = NodePath("HexGrid2/Highlight/Viewport")
 
 [sub_resource type="SpatialMaterial" id=11]
 resource_local_to_scene = true
@@ -64,32 +64,27 @@ transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0.2,
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
-[node name="LabelQuad" type="MeshInstance" parent="HexGrid/Highlight"]
-transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, 0, 0.3, 0.5 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
-
-[node name="Viewport" type="Viewport" parent="HexGrid"]
+[node name="Viewport" type="Viewport" parent="HexGrid/Highlight"]
 size = Vector2( 200, 100 )
 transparent_bg = true
 hdr = false
 usage = 0
 render_target_v_flip = true
 
-[node name="Label" type="Label" parent="HexGrid/Viewport"]
+[node name="Label" type="Label" parent="HexGrid/Highlight/Viewport"]
 margin_right = 41.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PLANE"
 
-[node name="PlaneCoords" type="Label" parent="HexGrid/Viewport"]
+[node name="PlaneCoords" type="Label" parent="HexGrid/Highlight/Viewport"]
 margin_left = 50.0
 margin_right = 97.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PLANE"
 
-[node name="Label2" type="Label" parent="HexGrid/Viewport"]
+[node name="Label2" type="Label" parent="HexGrid/Highlight/Viewport"]
 margin_left = 18.0
 margin_top = 20.0
 margin_right = 58.0
@@ -97,13 +92,18 @@ margin_bottom = 34.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HEX"
 
-[node name="HexCoords" type="Label" parent="HexGrid/Viewport"]
+[node name="HexCoords" type="Label" parent="HexGrid/Highlight/Viewport"]
 margin_left = 50.0
 margin_top = 20.0
 margin_right = 90.0
 margin_bottom = 34.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HEX"
+
+[node name="LabelQuad" type="MeshInstance" parent="HexGrid/Highlight"]
+transform = Transform( -2.8213e-07, 0, -1, 0, 1, 0, 1, 0, -2.8213e-07, 0, 0.3, 0.5 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
 
 [node name="HexGrid2" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 3, -2 )
@@ -121,32 +121,27 @@ transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0.2,
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
-[node name="LabelQuad" type="MeshInstance" parent="HexGrid2/Highlight"]
-transform = Transform( -1.62921e-07, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 1.62921e-07, 7.1215e-15, 0, 0.3, 0.5 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 11 )
-
-[node name="Viewport" type="Viewport" parent="HexGrid2"]
+[node name="Viewport" type="Viewport" parent="HexGrid2/Highlight"]
 size = Vector2( 200, 100 )
 transparent_bg = true
 hdr = false
 usage = 0
 render_target_v_flip = true
 
-[node name="Label" type="Label" parent="HexGrid2/Viewport"]
+[node name="Label" type="Label" parent="HexGrid2/Highlight/Viewport"]
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PLANE"
 
-[node name="PlaneCoords" type="Label" parent="HexGrid2/Viewport"]
+[node name="PlaneCoords" type="Label" parent="HexGrid2/Highlight/Viewport"]
 margin_left = 50.0
 margin_right = 97.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "PLANE"
 
-[node name="Label2" type="Label" parent="HexGrid2/Viewport"]
+[node name="Label2" type="Label" parent="HexGrid2/Highlight/Viewport"]
 margin_left = 18.0
 margin_top = 20.0
 margin_right = 58.0
@@ -154,13 +149,18 @@ margin_bottom = 34.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HEX"
 
-[node name="HexCoords" type="Label" parent="HexGrid2/Viewport"]
+[node name="HexCoords" type="Label" parent="HexGrid2/Highlight/Viewport"]
 margin_left = 50.0
 margin_top = 20.0
 margin_right = 90.0
 margin_bottom = 34.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "HEX"
+
+[node name="LabelQuad" type="MeshInstance" parent="HexGrid2/Highlight"]
+transform = Transform( -1.62921e-07, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 1.62921e-07, 7.1215e-15, 0, 0.3, 0.5 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 11 )
 
 [connection signal="input_event" from="HexGrid" to="HexGrid" method="_on_HexGrid_input_event"]
 [connection signal="input_event" from="HexGrid2" to="HexGrid2" method="_on_HexGrid_input_event"]

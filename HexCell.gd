@@ -61,6 +61,7 @@
 
 """
 extends Resource
+#warning-ignore-all:unused_class_variable
 
 # We use unit-size flat-topped hexes
 const size = Vector2(1, sqrt(3)/2)
@@ -206,7 +207,7 @@ func get_ring(distance):
 	var cells = Array()
 	var current = new_hex(self.cube_coords + (DIR_N * distance))
 	for dir in [DIR_SE, DIR_S, DIR_SW, DIR_NW, DIR_N, DIR_NE]:
-		for step in range(distance):
+		for _step in range(distance):
 			cells.append(current)
 			current = current.get_adjacent(dir)
 	return cells

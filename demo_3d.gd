@@ -3,12 +3,12 @@ extends Spatial
 
 var HexGrid = preload("./HexGrid.gd").new()
 
-onready var plane_coords_label = get_node("Viewport/PlaneCoords")
-onready var hex_coords_label = get_node("Viewport/HexCoords")
 onready var highlight = get_node("Highlight")
+onready var plane_coords_label = get_node("Highlight/Viewport/PlaneCoords")
+onready var hex_coords_label = get_node("Highlight/Viewport/HexCoords")
 
 
-func _on_HexGrid_input_event(camera, event, click_position, click_normal, shape_idx):
+func _on_HexGrid_input_event(_camera, _event, click_position, _click_normal, _shape_idx):
 	# It's called click_position, but you don't need to click
 	var plane_coords = self.transform.affine_inverse() * click_position
 	plane_coords = Vector2(plane_coords.x, plane_coords.z)
