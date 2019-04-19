@@ -317,3 +317,15 @@ func test_obstacle_neighbour():
 	]
 	check_path(grid.find_path(a_pos, f_pos), path)
 	
+func test_difficult_goal():
+	# We should be able to path to a goal, no matter how difficult the final step
+	grid.add_obstacles(f_pos, 1337)
+	var path = [
+		a_pos,
+		Vector2(1, 1),
+		Vector2(0, 2),
+		Vector2(0, 3),
+		f_pos,
+	]
+	check_path(grid.find_path(a_pos, f_pos), path)
+	
