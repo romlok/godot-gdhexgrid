@@ -169,9 +169,9 @@ func get_offset_coords():
 func set_offset_coords(val):
 	# Sets position from a Vector2 of offset coordinates
 	var x = int(val.x)
-	var y = int(val.y)
-	var cube_y = y - (x - (x & 1)) / 2
-	self.set_axial_coords(Vector2(x, cube_y))
+	var z = int(val.z)
+	var cube_z = z - (x - (x & 1)) / 2
+	self.set_axial_coords(Vector2(x, cube_z))
 	
 
 """
