@@ -1,7 +1,5 @@
 extends "res://addons/gut/test.gd"
 
-var HexCell = load("res://HexCell.gd")
-var HexGrid = load("res://HexGrid.gd")
 var grid
 var map
 # This is the hex map we'll test with:
@@ -74,7 +72,7 @@ func test_roundabounds():
 	assert_eq(grid.get_hex_cost(Vector2(0, 0)), grid.path_cost_default)
 	assert_eq(grid.get_hex_cost(Vector2(-4, 0)), 0)
 	assert_eq(grid.get_hex_cost(Vector2(0, 3)), 0)
-	
+
 func test_grid_obstacles():
 	# Make sure we can obstacleize the grid
 	assert_eq(grid.get_obstacles().size(), obstacles.size())
@@ -89,7 +87,7 @@ func test_grid_obstacles():
 	assert_does_not_have(grid.get_obstacles(), Vector2(0, 0))
 	# Make sure removing a non-obstacle doesn't error
 	grid.remove_obstacles(Vector2(0, 0))
-	
+
 func test_grid_barriers():
 	# Make sure we can barrier things on the grid
 	assert_eq(grid.get_barriers().size(), 0)
@@ -119,7 +117,7 @@ func test_grid_barriers():
 	assert_eq(barriers.size(), 0)
 	# Remove no barrier with no error
 	grid.remove_barriers([Vector2(1, 1), Vector2(2, 2)])
-	
+
 
 func test_hex_costs():
 	# Test that the price is right
@@ -128,7 +126,7 @@ func test_hex_costs():
 	# Test partial obstacle
 	grid.add_obstacles(Vector2(1, 1), 1.337)
 	assert_eq(grid.get_hex_cost(Vector2(1, 1)), 1.337, "9")
-	
+
 func test_move_costs():
 	# Test that more than just hex costs are at work
 	assert_eq(grid.get_move_cost(Vector2(0, 0), HexCell.DIR_N), grid.path_cost_default)
@@ -148,7 +146,7 @@ func test_move_cost_cumulative():
 	grid.add_barriers(Vector2(0, 0), HexCell.DIR_N, 4)
 	grid.add_barriers(Vector2(0, 1), HexCell.DIR_S, 8)
 	assert_eq(grid.get_move_cost(Vector2(0, 0), HexCell.DIR_N), 14)
-	
+
 
 func check_path(got, expected):
 	# Assert that the gotten path was the expected route
@@ -161,7 +159,7 @@ func check_path(got, expected):
 			assert_has(check, hex.axial_coords)
 		else:
 			assert_eq(check, hex.axial_coords)
-		
+
 func test_straight_line():
 	# Path between A and C is straight
 	var path = [
@@ -173,7 +171,7 @@ func test_straight_line():
 		c_pos,
 	]
 	check_path(grid.find_path(a_pos, c_pos), path)
-	
+
 func test_wonky_line():
 	# Path between B and C is a bit wonky
 	var path = [
@@ -183,7 +181,7 @@ func test_wonky_line():
 		c_pos,
 	]
 	check_path(grid.find_path(HexCell.new(b_pos), HexCell.new(c_pos)), path)
-	
+
 func test_obstacle():
 	# Path between A and B should go around the bottom
 	var path = [
@@ -195,7 +193,7 @@ func test_obstacle():
 		b_pos,
 	]
 	check_path(grid.find_path(a_pos, b_pos), path)
-	
+
 func test_walls():
 	# Test that we can't walk through walls
 	var walls = [
@@ -215,7 +213,7 @@ func test_walls():
 		g_pos,
 	]
 	check_path(grid.find_path(a_pos, g_pos), path)
-	
+
 func test_slopes():
 	# Test that we *can* walk through *some* walls
 	# A barrier which is passable, but not worth our hex
@@ -228,7 +226,7 @@ func test_slopes():
 		g_pos,
 	]
 	check_path(grid.find_path(a_pos, g_pos), path)
-	
+
 func test_rough_terrain():
 	# Path between A and B depends on the toughness of D
 	var short_path = [
@@ -263,7 +261,7 @@ func test_rough_terrain():
 	for cost in tests:
 		grid.add_obstacles(d_pos, cost)
 		check_path(grid.find_path(a_pos, b_pos), tests[cost])
-	
+
 func test_exception():
 	# D is impassable, so path between A and B should go around the top as well
 	var path = [
@@ -292,7 +290,7 @@ func test_exception_hex():
 		b_pos,
 	]
 	check_path(grid.find_path(a_pos, b_pos, [HexCell.new(d_pos)]), path)
-	
+
 func test_exceptional_goal():
 	# If D is impassable, we should path to its neighbour
 	var path = [
@@ -301,12 +299,12 @@ func test_exceptional_goal():
 		Vector2(4, 0),
 	]
 	check_path(grid.find_path(a_pos, d_pos, [d_pos]), path)
-	
+
 func test_inaccessible():
 	# E is inaccessible!
 	var path = grid.find_path(a_pos, e_pos)
 	assert_eq(path.size(), 0)
-	
+
 func test_obstacle_neighbour():
 	# Sometimes we can't get to something, but we can get next to it.
 	var path = [
@@ -316,7 +314,7 @@ func test_obstacle_neighbour():
 		Vector2(0, 3),
 	]
 	check_path(grid.find_path(a_pos, f_pos), path)
-	
+
 func test_difficult_goal():
 	# We should be able to path to a goal, no matter how difficult the final step
 	grid.add_obstacles(f_pos, 1337)
@@ -328,4 +326,4 @@ func test_difficult_goal():
 		f_pos,
 	]
 	check_path(grid.find_path(a_pos, f_pos), path)
-	
+

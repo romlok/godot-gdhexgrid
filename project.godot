@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Resource",
+"class": "HexCell",
+"language": "GDScript",
+"path": "res://addons/gdhexgrid/HexCell.gd"
+}, {
+"base": "Reference",
+"class": "HexGrid",
+"language": "GDScript",
+"path": "res://addons/gdhexgrid/HexGrid.gd"
+} ]
 _global_script_class_icons={
-
+"HexCell": "res://addons/gdhexgrid/icon_hex_cell.svg",
+"HexGrid": "res://addons/gdhexgrid/icon_hex_grid.svg"
 }
 
 [application]
@@ -21,7 +32,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "gut" )
+enabled=PoolStringArray( "gdhexgrid", "gut" )
 
 [rendering]
 
