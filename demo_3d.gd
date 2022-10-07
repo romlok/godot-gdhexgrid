@@ -1,11 +1,11 @@
 # Script to attach to a node which represents a hex grid
-extends Spatial
+extends Node3D
 
 var HexGrid = preload("./HexGrid.gd").new()
 
-onready var highlight = get_node("Highlight")
-onready var plane_coords_label = get_node("Highlight/Viewport/PlaneCoords")
-onready var hex_coords_label = get_node("Highlight/Viewport/HexCoords")
+@onready var highlight = get_node("Highlight")
+@onready var plane_coords_label = get_node("Highlight/PlaneCoords")
+@onready var hex_coords_label = get_node("Highlight/HexCoords")
 
 
 func _on_HexGrid_input_event(_camera, _event, click_position, _click_normal, _shape_idx):
@@ -21,5 +21,5 @@ func _on_HexGrid_input_event(_camera, _event, click_position, _click_normal, _sh
 	# Snap the highlight to the nearest grid cell
 	if highlight != null:
 		var plane_pos = HexGrid.get_hex_center(HexGrid.get_hex_at(plane_coords))
-		highlight.translation.x = plane_pos.x
-		highlight.translation.z = plane_pos.y
+		highlight.position.x = plane_pos.x
+		highlight.position.z = plane_pos.y
