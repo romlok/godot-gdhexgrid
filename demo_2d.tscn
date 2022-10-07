@@ -1,48 +1,47 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cs5wadlpf3te5"]
 
-[ext_resource path="res://demo_2d.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://demo_2d.gd" id="1"]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 512, 300 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(1024, 600)
 
 [node name="2D Demo" type="Node"]
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 512, 300 )
-script = ExtResource( 1 )
+position = Vector2(512, 300)
+script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 0.237854, 0 )
-shape = SubResource( 1 )
+position = Vector2(0.237854, 0)
+shape = SubResource("1")
 
 [node name="Highlight" type="Polygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )
+polygon = PackedVector2Array(-12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0)
 
 [node name="Label" type="Label" parent="Area2D/Highlight"]
-margin_left = 5.0
-margin_top = -39.0
-margin_right = 52.0
-margin_bottom = -25.0
+offset_left = 5.0
+offset_top = -39.0
+offset_right = 52.0
+offset_bottom = -25.0
 text = "SCREEN"
 
 [node name="AreaCoords" type="Label" parent="Area2D/Highlight"]
-margin_left = 55.0
-margin_top = -39.0
-margin_right = 105.0
-margin_bottom = -25.0
+offset_left = 55.0
+offset_top = -39.0
+offset_right = 105.0
+offset_bottom = -25.0
 text = "SCREEN"
 
 [node name="Label2" type="Label" parent="Area2D/Highlight"]
-margin_left = 25.0
-margin_top = -19.0
-margin_right = 56.0
-margin_bottom = -5.0
+offset_left = 25.0
+offset_top = -19.0
+offset_right = 56.0
+offset_bottom = -5.0
 text = "HEX"
 
 [node name="HexCoords" type="Label" parent="Area2D/Highlight"]
-margin_left = 55.0
-margin_top = -19.0
-margin_right = 105.0
-margin_bottom = -5.0
+offset_left = 55.0
+offset_top = -19.0
+offset_right = 105.0
+offset_bottom = -5.0
 text = "HEX"
-
